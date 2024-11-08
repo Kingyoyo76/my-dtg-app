@@ -51,7 +51,7 @@ export default function HomePage() {
           <nav className="container mx-auto px-4 py-4 flex justify-between items-center">
             <div className="flex items-center">
               <Image
-                src="/your-logo.png" // update with your logo path
+                src="/dtg logo.png" // update with your logo path
                 alt="DTG Logo"
                 width={150}
                 height={50}
