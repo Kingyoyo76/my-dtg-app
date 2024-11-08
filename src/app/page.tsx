@@ -34,14 +34,12 @@ import {
   ExternalLink,
   Rocket,
   Dumbbell,
-  Flame,
-  Hotel,
-  Heart
+  Flame
 } from 'lucide-react'
 import { Link as ScrollLink, Element } from 'react-scroll'
 
 const SectionHeader = ({ children }: { children: React.ReactNode }) => (
-  <h2 className="text-4xl font-bold mb-6 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-800 to-blue-400">
+  <h2 className="text-4xl font-bold mb-6 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-800 to-blue-500">
     {children}
   </h2>
 )
@@ -92,7 +90,7 @@ const AnimatedText = ({ messages, className }: { messages: string[], className?:
   );
 };
 
-// Your sections (features, solutions, industries, etc.) go here with the same structure
+// Define your content (features, solutions, etc.) here as in previous steps...
 
 const Footer = () => (
   <footer className="bg-blue-900 text-white">
@@ -164,10 +162,69 @@ export default function Component() {
   return (
     <LazyMotion features={domAnimation}>
       <div className="min-h-screen bg-white text-gray-900">
-        {/* Header and navigation code */}
-        
+        <header className="bg-white shadow-sm fixed w-full z-50">
+          <nav className="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div className="flex items-center">
+              <Image
+                src="https://your-logo-url.com" // Replace with your logo URL
+                alt="DTG Logo"
+                width={200}
+                height={60}
+                className="h-16 w-auto"
+                priority
+              />
+            </div>
+            <ul className="hidden md:flex space-x-6">
+              {['Solutions', 'Industries', 'Approach', 'Contact'].map((item) => (
+                <li key={item}>
+                  <ScrollLink
+                    to={item.toLowerCase()}
+                    smooth={true}
+                    duration={500}
+                    className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer"
+                  >
+                    {item}
+                  </ScrollLink>
+                </li>
+              ))}
+            </ul>
+            <Button className="md:hidden" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+              <Menu className="h-6 w-6" />
+            </Button>
+          </nav>
+          {mobileMenuOpen && (
+            <div className="md:hidden bg-white py-2">
+              <ul className="flex flex-col items-center space-y-2">
+                {['Solutions', 'Industries', 'Approach', 'Contact'].map((item) => (
+                  <li key={item}>
+                    <ScrollLink
+                      to={item.toLowerCase()}
+                      smooth={true}
+                      duration={500}
+                      className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {item}
+                    </ScrollLink>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </header>
+
         <main className="pt-24">
-          {/* Main content sections go here, such as hero, solutions, industries, etc. */}
+          {/* Sections (Hero, Features, Solutions, etc.) go here */}
+          {/* Example */}
+          <Element name="hero">
+            <section className="py-16 bg-blue-50">
+              <div className="container mx-auto text-center">
+                <h1 className="text-5xl font-bold text-gray-800">Welcome to DTG AI Solutions</h1>
+                <p className="mt-4 text-lg text-gray-700">Transforming businesses with innovative AI-powered solutions.</p>
+              </div>
+            </section>
+          </Element>
+          {/* Add other sections similarly */}
         </main>
 
         <Footer />
