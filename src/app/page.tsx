@@ -93,7 +93,6 @@ const AnimatedText = ({ messages, className }: { messages: string[], className?:
 };
 
 // Your sections (features, solutions, industries, etc.) go here with the same structure
-// ...
 
 const Footer = () => (
   <footer className="bg-blue-900 text-white">
