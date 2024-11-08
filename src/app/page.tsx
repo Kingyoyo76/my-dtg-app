@@ -364,7 +364,8 @@ export default function Component() {
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                   {industries.map((industry, index) => (
                     <Card key={index}>
-                      <CardContent className="p-6">
+                      <div className="p-6">
+
                         {industry.icon}
                         <h3 className="text-xl font-semibold mb-2">{industry.title}</h3>
                         <ul className="list-disc list-inside text-gray-600">
