@@ -7,9 +7,17 @@ import { LazyMotion, domAnimation, m } from 'framer-motion'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import {
-  Brain, Zap, Cpu, Briefcase, GraduationCap, Banknote, Film, 
-  Target, Rocket, Dumbbell, Flame, Hotel, Heart, Sparkles, 
-  Menu, ExternalLink, Award
+  Brain,
+  Zap,
+  Cpu,
+  Award,
+  Sparkles,
+  Menu,
+  ExternalLink,
+  Rocket,
+  Dumbbell,
+  Flame,
+  Heart,
 } from 'lucide-react'
 import { Link as ScrollLink, Element } from 'react-scroll'
 
@@ -32,103 +40,7 @@ const FeatureCard = ({ icon, title, description }: { icon: React.ReactNode, titl
   </m.div>
 )
 
-const features = [
-  { icon: <Brain className="h-10 w-10 text-blue-600" />, title: "UNBREAKABLE AI SOLUTIONS", description: "Our AI isn't just smart—it's relentless. We equip your business to tackle its biggest challenges and thrive under pressure." },
-  { icon: <Dumbbell className="h-10 w-10 text-blue-600" />, title: "STRENGTHEN YOUR OPERATIONS", description: "We build processes that don't just work; they endure. Take your efficiency and resilience to a new level." },
-  { icon: <Flame className="h-10 w-10 text-blue-600" />, title: "FUEL FOR INNOVATION", description: "With DTG's AI, you don't follow trends—you set them. Ignite forward-thinking solutions that lead your industry." },
-]
-
-const solutions = [
-  { icon: <Zap className="h-10 w-10 text-blue-600" />, title: "UNSTOPPABLE AUTOMATION", description: "Automate with power and precision, eliminating inefficiencies that slow your business down." },
-  { icon: <Target className="h-10 w-10 text-blue-600" />, title: "LASER-FOCUSED INSIGHTS", description: "DTG's AI delivers insights that hit the mark, driving decisions that keep you ahead of the competition." },
-]
-
-const industries = [
-  { icon: <GraduationCap className="h-10 w-10 text-blue-600 mb-4" />, title: "Education", items: ["Unlock student potential", "Maximize administrative efficiency", "Advance research initiatives"] },
-  { icon: <Briefcase className="h-10 w-10 text-blue-600 mb-4" />, title: "Manufacturing", items: ["Optimized production", "Top-tier quality assurance", "Enhanced supply chain resilience"] },
-  { icon: <Banknote className="h-10 w-10 text-blue-600 mb-4" />, title: "Financial Services", items: ["Risk reduction", "Proactive fraud detection", "Unparalleled customer experience"] },
-  { icon: <Film className="h-10 w-10 text-blue-600 mb-4" />, title: "Media", items: ["Innovative content strategies", "Seamless video processing", "Precision audience targeting"] },
-  { icon: <Hotel className="h-10 w-10 text-blue-600 mb-4" />, title: "Hospitality", items: ["Personalized guest experiences", "Efficient staff allocation", "Streamlined operations"] },
-  { icon: <Heart className="h-10 w-10 text-blue-600 mb-4" />, title: "Healthcare", items: ["Enhanced patient care", "Optimized workflows", "Data security and compliance"] },
-]
-
-const Footer = () => (
-  <footer className="bg-blue-900 text-white">
-    <div className="container mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-3 gap-8">
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold">About DTG</h3>
-        <p className="text-sm text-gray-300">
-          Distributed Technology Group (DTG) - A service-disabled veteran-owned company committed to transforming businesses with no-nonsense, results-driven AI solutions.
-        </p>
-      </div>
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Quick Links</h3>
-        <nav>
-          <ul className="space-y-2">
-            <li>
-              <Link 
-                href="#" 
-                className="text-gray-300 hover:text-blue-300 transition-colors duration-200"
-              >
-                AI Solutions
-              </Link>
-            </li>
-            <li>
-              <Link 
-                href="#" 
-                className="text-gray-300 hover:text-blue-300 transition-colors duration-200"
-              >
-                Industries We Serve
-              </Link>
-            </li>
-            <li>
-              <Link 
-                href="#" 
-                className="text-gray-300 hover:text-blue-300 transition-colors duration-200"
-              >
-                Case Studies
-              </Link>
-            </li>
-            <li>
-              <Link 
-                href="#" 
-                className="text-gray-300 hover:text-blue-300 transition-colors duration-200"
-              >
-                Contact Us
-              </Link>
-            </li>
-          </ul>
-        </nav>
-      </div>
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Connect With Us</h3>
-        <p className="text-sm text-gray-300">
-          Ready to dominate your industry with AI? Get in touch with our experts today.
-        </p>
-        <Link 
-          href="https://www.dtg.com" 
-          className="text-blue-300 hover:text-blue-100 transition-colors duration-200 flex items-center gap-2"
-        >
-          Visit our website
-          <ExternalLink className="h-4 w-4" />
-        </Link>
-      </div>
-    </div>
-    <div className="mt-12 pt-8 border-t border-blue-800">
-      <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-        <p className="text-sm text-gray-400">
-          © 2024 DTG. Pushing the Boundaries of AI Excellence. No Excuses.
-        </p>
-        <div className="flex gap-4">
-          <Link href="#" className="text-sm text-gray-400 hover:text-blue-300">Privacy Policy</Link>
-          <Link href="#" className="text-sm text-gray-400 hover:text-blue-300">Terms of Service</Link>
-        </div>
-      </div>
-    </div>
-  </footer>
-)
-
-export default function Component() {
+export default function HomePage() {
   const [showContactForm, setShowContactForm] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -139,12 +51,11 @@ export default function Component() {
           <nav className="container mx-auto px-4 py-4 flex justify-between items-center">
             <div className="flex items-center">
               <Image
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202024-10-25%20171623-QBQnvTq6phEC2AsFTXjmLoRqfjxxlv.png"
+                src="/your-logo.png" // update with your logo path
                 alt="DTG Logo"
-                width={200}
-                height={60}
+                width={150}
+                height={50}
                 className="h-16 w-auto"
-                priority
               />
             </div>
             <ul className="hidden md:flex space-x-6">
@@ -165,19 +76,65 @@ export default function Component() {
               <Menu className="h-6 w-6" />
             </Button>
           </nav>
+          {mobileMenuOpen && (
+            <div className="md:hidden bg-white py-2">
+              <ul className="flex flex-col items-center space-y-2">
+                {['Solutions', 'Industries', 'Impact', 'Approach', 'Contact'].map((item) => (
+                  <li key={item}>
+                    <ScrollLink
+                      to={item.toLowerCase()}
+                      smooth={true}
+                      duration={500}
+                      className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {item}
+                    </ScrollLink>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </header>
 
         <main className="pt-24">
           <Element name="hero">
             <section className="py-16 overflow-hidden">
               <div className="container mx-auto px-4">
-                <h1 className="text-5xl font-bold text-blue-800">Your AI Transformation Starts Here</h1>
+                <div className="flex flex-col md:flex-row items-center gap-12">
+                  <div className="md:w-1/2">
+                    <m.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+                      <h1 className="text-4xl md:text-5xl font-bold mb-6 text-blue-800">STOP FALLING BEHIND.</h1>
+                      <p className="text-xl mb-6">Your competition is using AI. Time to take action with DTG.</p>
+                      <Button className="bg-blue-600 hover:bg-blue-700 text-white text-2xl px-10 py-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+                        TAKE CONTROL WITH AI NOW
+                      </Button>
+                    </m.div>
+                  </div>
+                  <m.div className="md:w-1/2" initial={{ opacity: 0, x: 100 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
+                    <Image src="/ai-illustration.png" alt="AI-Powered Business Domination" width={400} height={400} className="rounded-lg shadow-2xl object-cover" />
+                  </m.div>
+                </div>
               </div>
             </section>
           </Element>
 
-          <Footer />
+          <Element name="solutions">
+            <section className="py-16 bg-gray-50">
+              <div className="container mx-auto px-4">
+                <SectionHeader>DOMINATE WITH AI-POWERED SOLUTIONS</SectionHeader>
+                <div className="grid md:grid-cols-2 gap-8">
+                  <FeatureCard icon={<Brain className="h-10 w-10 text-blue-600" />} title="UNBREAKABLE AI SOLUTIONS" description="Our AI isn't just smart—it's relentless." />
+                  <FeatureCard icon={<Zap className="h-10 w-10 text-blue-600" />} title="UNSTOPPABLE AUTOMATION" description="Automate with power and precision." />
+                </div>
+              </div>
+            </section>
+          </Element>
         </main>
+
+        <footer className="bg-blue-900 text-white mt-16 py-6 text-center">
+          <p>© 2024 DTG. Pushing the Boundaries of AI Excellence. No Excuses.</p>
+        </footer>
       </div>
     </LazyMotion>
   )
