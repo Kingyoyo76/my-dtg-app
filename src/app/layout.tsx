@@ -1,12 +1,15 @@
 import './globals.css'
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-
-const inter = Inter({ subsets: ['latin'] })
+import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'DTG AI Solutions',
-  description: 'AI-powered solutions engineered by DTG',
+  title: 'DTG AI Solutions - Dominate Your Industry with AI-Powered Solutions',
+  description: 'DTG AI Solutions provides cutting-edge artificial intelligence solutions for businesses across various industries. Revolutionize your operations with our unbreakable AI integration.',
+  keywords: 'AI solutions, artificial intelligence, business automation, data analytics, machine learning',
+  openGraph: {
+    title: 'DTG AI Solutions - Dominate Your Industry with AI-Powered Solutions',
+    description: 'Revolutionize your operations with our unbreakable AI integration and optimize for peak performance.',
+    images: [{ url: '/og-image.jpg' }],
+  },
 }
 
 export default function RootLayout({
@@ -16,12 +19,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}
-<script dangerouslySetInnerHTML={{__html: `
-  window.onerror = function(message, source, lineno, colno, error) {
-    document.body.innerHTML += '<div style="color: red; position: fixed; top: 0; left: 0; width: 100%; background: white; z-index: 9999;">' + message + '</div>';
-  }
-`}} /></body>
+      <body>{children}</body>
     </html>
   )
 }

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
+import { motion } from 'framer-motion'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import {
@@ -13,8 +14,11 @@ import {
   CheckCircle,
   Award,
   Rocket,
-  ArrowRight
+  ArrowRight,
+  Menu,
+  X
 } from 'lucide-react'
+import ContactForm from '@/components/ContactForm'
 
 const SectionHeader = ({ children }: { children: React.ReactNode }) => (
   <h2 className="text-3xl font-bold mb-6 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-800 to-blue-500">
@@ -37,6 +41,7 @@ const FeatureCard = ({ icon, title, description }: { icon: React.ReactNode, titl
 export default function Home() {
   const [isLoaded, setIsLoaded] = useState(false)
   const [showContactForm, setShowContactForm] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   useEffect(() => {
     setIsLoaded(true)
@@ -47,26 +52,18 @@ export default function Home() {
     return <div>Loading...</div>
   }
 
-  const ContactForm = () => (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white p-8 rounded-lg max-w-md w-full">
-        <h2 className="text-2xl font-bold mb-4">Let's Connect</h2>
-        <form onSubmit={(e) => {
-          e.preventDefault()
-          alert("Form submitted! We'll be in touch soon.")
-          setShowContactForm(false)
-        }}>
-          <input type="text" placeholder="Name" className="w-full p-2 mb-4 border rounded" required />
-          <input type="email" placeholder="Email" className="w-full p-2 mb-4 border rounded" required />
-          <textarea placeholder="Message" className="w-full p-2 mb-4 border rounded" rows={4} required></textarea>
-          <div className="flex justify-end">
-            <Button type="button" onClick={() => setShowContactForm(false)} className="mr-2">Cancel</Button>
-            <Button type="submit">Submit</Button>
-          </div>
-        </form>
-      </div>
-    </div>
-  )
+  const scrollToSection = (sectionId: string) => {
+    const section = document.getElementById(sectionId)
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' })
+    }
+    setMobileMenuOpen(false)
+  }
+
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 }
+  }
 
   return (
     <div className="min-h-screen bg-white text-gray-900">
@@ -85,21 +82,48 @@ export default function Home() {
           <ul className="hidden md:flex space-x-6">
             {['Solutions', 'Industries', 'Approach', 'Contact'].map((item) => (
               <li key={item}>
-                <a href={`#${item.toLowerCase()}`} className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer">
+                <button
+                  onClick={() => scrollToSection(item.toLowerCase())}
+                  className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer"
+                >
                   {item}
-                </a>
+                </button>
               </li>
             ))}
           </ul>
-          <Button className="md:hidden">Menu</Button>
+          <Button className="md:hidden" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+            {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </Button>
         </nav>
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-white py-2">
+            <ul className="flex flex-col items-center space-y-2">
+              {['Solutions', 'Industries', 'Approach', 'Contact'].map((item) => (
+                <li key={item}>
+                  <button
+                    onClick={() => scrollToSection(item.toLowerCase())}
+                    className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer"
+                  >
+                    {item}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </header>
 
       <main className="pt-24">
         <section id="hero" className="py-16 overflow-hidden">
           <div className="container mx-auto px-4">
             <div className="flex flex-col md:flex-row items-center gap-12">
-              <div className="md:w-1/2">
+              <motion.div
+                className="md:w-1/2"
+                initial="hidden"
+                animate="visible"
+                variants={fadeInUp}
+                transition={{ duration: 0.5 }}
+              >
                 <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight text-blue-800">
                   <span className="block">DOMINATE YOUR INDUSTRY</span>
                   <span className="block text-blue-600">WITH AI-POWERED SOLUTIONS</span>
@@ -115,8 +139,14 @@ export default function Home() {
                 >
                   UNLEASH AI POWER NOW
                 </Button>
-              </div>
-              <div className="md:w-1/2">
+              </motion.div>
+              <motion.div
+                className="md:w-1/2"
+                initial="hidden"
+                animate="visible"
+                variants={fadeInUp}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
                 <Image
                   src="/placeholder.svg?height=400&width=600"
                   alt="AI-Powered Business Transformation"
@@ -124,7 +154,7 @@ export default function Home() {
                   height={400}
                   className="rounded-lg shadow-2xl"
                 />
-              </div>
+              </motion.div>
             </div>
           </div>
         </section>
@@ -132,22 +162,50 @@ export default function Home() {
         <section id="solutions" className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
             <SectionHeader>OUR AI SOLUTIONS</SectionHeader>
-            <div className="grid md:grid-cols-3 gap-8">
+            <motion.div
+              className="grid md:grid-cols-3 gap-8"
+              initial="hidden"
+              animate="visible"
+              variants={{
+                hidden: { opacity: 0 },
+                visible: {
+                  opacity: 1,
+                  transition: {
+                    staggerChildren: 0.1
+                  }
+                }
+              }}
+            >
               {[
                 { icon: <Brain className="h-10 w-10 text-blue-600" />, title: "UNBREAKABLE AI SOLUTIONS", description: "Equip your business to tackle its biggest challenges and thrive under pressure." },
                 { icon: <Zap className="h-10 w-10 text-blue-600" />, title: "UNSTOPPABLE AUTOMATION", description: "Automate with power and precision, eliminating inefficiencies that slow your business down." },
                 { icon: <Target className="h-10 w-10 text-blue-600" />, title: "LASER-FOCUSED INSIGHTS", description: "Deliver insights that hit the mark, driving decisions that keep you ahead of the competition." },
               ].map((feature, index) => (
-                <FeatureCard key={index} icon={feature.icon} title={feature.title} description={feature.description} />
+                <motion.div key={index} variants={fadeInUp}>
+                  <FeatureCard icon={feature.icon} title={feature.title} description={feature.description} />
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </section>
 
         <section id="industries" className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <SectionHeader>INDUSTRIES WE SERVE</SectionHeader>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <motion.div
+              className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+              initial="hidden"
+              animate="visible"
+              variants={{
+                hidden: { opacity: 0 },
+                visible: {
+                  opacity: 1,
+                  transition: {
+                    staggerChildren: 0.1
+                  }
+                }
+              }}
+            >
               {[
                 { title: "Manufacturing", items: ["Optimized production", "Quality assurance", "Supply chain resilience"] },
                 { title: "Finance", items: ["Risk management", "Fraud detection", "Personalized banking"] },
@@ -156,58 +214,81 @@ export default function Home() {
                 { title: "Energy", items: ["Grid optimization", "Predictive maintenance", "Renewable energy forecasting"] },
                 { title: "Education", items: ["Personalized learning", "Administrative efficiency", "Student performance analysis"] },
               ].map((industry, index) => (
-                <Card key={index}>
-                  <CardContent className="p-6">
-                    <h3 className="text-xl font-semibold mb-4">{industry.title}</h3>
-                    <ul className="list-disc list-inside">
-                      {industry.items.map((item, itemIndex) => (
-                        <li key={itemIndex} className="text-gray-600">{item}</li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
+                <motion.div key={index} variants={fadeInUp}>
+                  <Card>
+                    <CardContent className="p-6">
+                      <h3 className="text-xl font-semibold mb-4">{industry.title}</h3>
+                      <ul className="list-disc list-inside">
+                        {industry.items.map((item, itemIndex) => (
+                          <li key={itemIndex} className="text-gray-600">{item}</li>
+                        ))}
+                      </ul>
+                    </CardContent>
+                  </Card>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </section>
 
         <section id="approach" className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
             <SectionHeader>OUR APPROACH</SectionHeader>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <motion.div
+              className="grid md:grid-cols-2 lg:grid-cols-4 gap-8"
+              initial="hidden"
+              animate="visible"
+              variants={{
+                hidden: { opacity: 0 },
+                visible: {
+                  opacity: 1,
+                  transition: {
+                    staggerChildren: 0.1
+                  }
+                }
+              }}
+            >
               {[
                 { icon: <Cpu className="h-10 w-10 text-blue-600" />, title: "Analyze", description: "We dive deep into your business processes to identify key areas for AI integration." },
                 { icon: <BarChart className="h-10 w-10 text-blue-600" />, title: "Strategize", description: "Our experts develop a tailored AI strategy aligned with your business goals." },
                 { icon: <Rocket className="h-10 w-10 text-blue-600" />, title: "Implement", description: "We deploy cutting-edge AI solutions seamlessly into your existing infrastructure." },
                 { icon: <ArrowRight className="h-10 w-10 text-blue-600" />, title: "Optimize", description: "Continuous monitoring and refinement ensure maximum ROI from your AI investment." },
               ].map((step, index) => (
-                <Card key={index}>
-                  <CardContent className="p-6">
-                    <div className="flex items-center mb-4">
-                      {step.icon}
-                      <h3 className="text-xl font-semibold ml-3">{step.title}</h3>
-                    </div>
-                    <p className="text-gray-600">{step.description}</p>
-                  </CardContent>
-                </Card>
+                <motion.div key={index} variants={fadeInUp}>
+                  <Card>
+                    <CardContent className="p-6">
+                      <div className="flex items-center mb-4">
+                        {step.icon}
+                        <h3 className="text-xl font-semibold ml-3">{step.title}</h3>
+                      </div>
+                      <p className="text-gray-600">{step.description}</p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </section>
 
         <section id="contact" className="py-16 bg-blue-600 text-white">
           <div className="container mx-auto px-4 text-center">
-            <h2 className="text-3xl font-bold mb-6">READY TO TRANSFORM YOUR BUSINESS?</h2>
-            <p className="text-xl mb-8">
-              Let's discuss how DTG's AI solutions can propel your company to new heights of success.
-            </p>
-            <Button
-              size="lg"
-              className="bg-white text-blue-600 hover:bg-gray-100 text-xl px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
-              onClick={() => setShowContactForm(true)}
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={fadeInUp}
             >
-              CONTACT US NOW
-            </Button>
+              <h2 className="text-3xl font-bold mb-6">READY TO TRANSFORM YOUR BUSINESS?</h2>
+              <p className="text-xl mb-8">
+                Let&apos;s discuss how DTG&apos;s AI solutions can propel your company to new heights of success.
+              </p>
+              <Button
+                size="lg"
+                className="bg-white text-blue-600 hover:bg-gray-100 text-xl px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+                onClick={() => setShowContactForm(true)}
+              >
+                CONTACT US NOW
+              </Button>
+            </motion.div>
           </div>
         </section>
       </main>
@@ -224,10 +305,10 @@ export default function Home() {
             <div>
               <h3 className="text-xl font-semibold mb-4">Quick Links</h3>
               <ul className="space-y-2">
-                <li><a href="#solutions" className="text-gray-400 hover:text-white">Solutions</a></li>
-                <li><a href="#industries" className="text-gray-400 hover:text-white">Industries</a></li>
-                <li><a href="#approach" className="text-gray-400 hover:text-white">Our Approach</a></li>
-                <li><a href="#contact" className="text-gray-400 hover:text-white">Contact</a></li>
+                <li><button onClick={() => scrollToSection('solutions')} className="text-gray-400 hover:text-white">Solutions</button></li>
+                <li><button onClick={() => scrollToSection('industries')} className="text-gray-400 hover:text-white">Industries</button></li>
+                <li><button onClick={() => scrollToSection('approach')} className="text-gray-400 hover:text-white">Our Approach</button></li>
+                <li><button onClick={() => scrollToSection('contact')} className="text-gray-400 hover:text-white">Contact</button></li>
               </ul>
             </div>
             <div>
@@ -245,7 +326,7 @@ export default function Home() {
         </div>
       </footer>
 
-      {showContactForm && <ContactForm />}
+      {showContactForm && <ContactForm onClose={() => setShowContactForm(false)} />}
     </div>
   )
 }
