@@ -27,7 +27,9 @@ import {
   Briefcase,
   GraduationCap,
   Banknote,
-  Film
+  Film,
+  Building2,
+  Heart
 } from 'lucide-react'
 import ContactForm from '@/components/ContactForm'
 import { motion } from 'framer-motion'
@@ -100,6 +102,8 @@ const industries = [
   { icon: <Briefcase className="h-10 w-10 text-blue-600 mb-4" />, title: "Manufacturing", items: ["Optimized production", "Top-tier quality assurance", "Enhanced supply chain resilience"] },
   { icon: <Banknote className="h-10 w-10 text-blue-600 mb-4" />, title: "Financial Services", items: ["Risk reduction", "Proactive fraud detection", "Unparalleled customer experience"] },
   { icon: <Film className="h-10 w-10 text-blue-600 mb-4" />, title: "Media", items: ["Innovative content strategies", "Seamless video processing", "Precision audience targeting"] },
+  { icon: <Building2 className="h-10 w-10 text-blue-600 mb-4" />, title: "Hospitality", items: ["Personalized guest experiences", "Efficient staff allocation", "Streamlined operations"] },
+  { icon: <Heart className="h-10 w-10 text-blue-600 mb-4" />, title: "Healthcare", items: ["Enhanced patient care", "Optimized workflows", "Data security and compliance"] }
 ]
 
 const advantages = [
@@ -338,7 +342,7 @@ export default function Home() {
         <section id="industries" className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
             <SectionHeader>INDUSTRY-SPECIFIC AI SOLUTIONS</SectionHeader>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {industries.map((industry, index) => (
                 <Card key={index}>
                   <CardContent className="p-6">
