@@ -340,25 +340,25 @@ export default function Home() {
         </section>
 
         <section id="industries" className="py-16 bg-gray-50">
-          <div className="container mx-auto px-4">
-            <SectionHeader>INDUSTRY-SPECIFIC AI SOLUTIONS</SectionHeader>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {industries.map((industry, index) => (
-                <Card key={index}>
-                  <CardContent className="p-6">
-                    {industry.icon}
-                    <h3 className="text-xl font-semibold mb-2">{industry.title}</h3>
-                    <ul className="list-disc list-inside text-gray-600">
-                      {industry.items.map((item, itemIndex) => (
-                        <li key={itemIndex}>{item}</li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
+  <div className="container mx-auto px-4">
+    <SectionHeader>INDUSTRY-SPECIFIC AI SOLUTIONS</SectionHeader>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {industries.map((industry, index) => (
+        <Card key={index}>
+          <CardContent className="p-6">
+            {industry.icon}
+            <h3 className="text-xl font-semibold mb-2">{industry.title}</h3>
+            <ul className="list-disc list-inside text-gray-600">
+              {industry.items.map((item, itemIndex) => (
+                <li key={itemIndex}>{item}</li>
               ))}
-            </div>
-          </div>
-        </section>
+            </ul>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  </div>
+</section>
 
         <section id="case-studies" className="py-16 bg-white">
           <div className="container mx-auto px-4">
