@@ -111,7 +111,7 @@ const ContactForm = ({ onClose }: { onClose: () => void }) => {
         <DialogHeader>
           <DialogTitle>Contact Us</DialogTitle>
           <DialogDescription>
-            Fill out this form and we'll get back to you as soon as possible.
+            Fill out this form and we&apos;ll get back to you as soon as possible.
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit}>
@@ -188,14 +188,14 @@ const ContactForm = ({ onClose }: { onClose: () => void }) => {
 }
 
 const features = [
-  { icon: <Brain className="h-10 w-10 text-blue-600" />, title: "UNBREAKABLE AI SOLUTIONS", description: "Our AI isn't just smart—it's relentless. We equip your business to tackle its biggest challenges and thrive under pressure." },
-  { icon: <Dumbbell className="h-10 w-10 text-blue-600" />, title: "STRENGTHEN YOUR OPERATIONS", description: "We build processes that don't just work; they endure. Take your efficiency and resilience to a new level." },
-  { icon: <Flame className="h-10 w-10 text-blue-600" />, title: "FUEL FOR INNOVATION", description: "With DTG's AI, you don't follow trends—you set them. Ignite forward-thinking solutions that lead your industry." },
+  { icon: <Brain className="h-10 w-10 text-blue-600" />, title: "UNBREAKABLE AI SOLUTIONS", description: "Our AI isn&apos;t just smart—it&apos;s relentless. We equip your business to tackle its biggest challenges and thrive under pressure." },
+  { icon: <Dumbbell className="h-10 w-10 text-blue-600" />, title: "STRENGTHEN YOUR OPERATIONS", description: "We build processes that don&apos;t just work; they endure. Take your efficiency and resilience to a new level." },
+  { icon: <Flame className="h-10 w-10 text-blue-600" />, title: "FUEL FOR INNOVATION", description: "With DTG&apos;s AI, you don&apos;t follow trends—you set them. Ignite forward-thinking solutions that lead your industry." },
 ]
 
 const solutions = [
   { icon: <Zap className="h-10 w-10 text-blue-600" />, title: "UNSTOPPABLE AUTOMATION", description: "Automate with power and precision, eliminating inefficiencies that slow your business down." },
-  { icon: <Target className="h-10 w-10 text-blue-600" />, title: "LASER-FOCUSED INSIGHTS", description: "DTG's AI delivers insights that hit the mark, driving decisions that keep you ahead of the competition." },
+  { icon: <Target className="h-10 w-10 text-blue-600" />, title: "LASER-FOCUSED INSIGHTS", description: "DTG&apos;s AI delivers insights that hit the mark, driving decisions that keep you ahead of the competition." },
 ]
 
 const industries = [
@@ -218,7 +218,7 @@ const approachSteps = [
   { title: "IDENTIFY YOUR BATTLEFRONT", desc: "We pinpoint the obstacles holding you back and uncover new opportunities." },
   { title: "BUILD A TAILORED STRATEGY", desc: "Our AI roadmap aligns with your unique goals and business vision." },
   { title: "IMPLEMENT WITH FORCE", desc: "Our team deploys AI solutions with precision, focused on delivering measurable impact." },
-  { title: "ELEVATE & OPTIMIZE", desc: "Our work doesn't end at implementation. We continually enhance your AI to push further." },
+  { title: "ELEVATE & OPTIMIZE", desc: "Our work doesn&apos;t end at implementation. We continually enhance your AI to push further." },
 ]
 
 const impactStats = [
@@ -234,7 +234,7 @@ const caseStudies = [
     industry: "Manufacturing",
     icon: <Briefcase className="h-12 w-12 text-blue-600 mb-4" />,
     challenge: "Inconsistent production and high costs",
-    solution: "DTG's AI-driven process overhaul",
+    solution: "DTG created an AI-driven process overhaul system",
     result: "Streamlined production and significant savings",
     metrics: [
       { icon: <TrendingUp className="h-5 w-5 text-green-500" />, label: "Efficiency Boost", value: "135%" },
@@ -246,7 +246,7 @@ const caseStudies = [
     industry: "Education",
     icon: <GraduationCap className="h-12 w-12 text-blue-600 mb-4" />,
     challenge: "Outdated learning systems and disengaged students",
-    solution: "DTG's adaptive AI learning platform",
+    solution: "DTG created an adaptive AI learning platform",
     result: "Increased student engagement and improved outcomes",
     metrics: [
       { icon: <Flame className="h-5 w-5 text-yellow-500" />, label: "Student Engagement", value: "+140%" },
@@ -486,7 +486,7 @@ export default function Home() {
                         <p className="text-gray-600">{study.challenge}</p>
                       </div>
                       <div>
-                        <h4 className="font-semibold text-lg mb-2">DTG's Solution:</h4>
+                        <h4 className="font-semibold text-lg mb-2">DTG&apos;s Solution:</h4>
                         <p className="text-gray-600">{study.solution}</p>
                       </div>
                       <div>
@@ -517,7 +517,7 @@ export default function Home() {
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-4xl font-bold mb-6">READY TO DOMINATE YOUR INDUSTRY WITH AI?</h2>
             <p className="text-xl mb-8 max-w-3xl mx-auto">
-              Don't just keep up with change – lead it. Partner with DTG's AI experts to unlock unprecedented levels of efficiency, innovation, and growth. Our battle-tested solutions are ready to elevate your business to industry-leading status.
+              Don&apos;t just keep up with change – lead it. Partner with DTG&apos;s AI experts to unlock unprecedented levels of efficiency, innovation, and growth. Our battle-tested solutions are ready to elevate your business to industry-leading status.
             </p>
             <Button
               size="lg"
@@ -545,7 +545,7 @@ export default function Home() {
             </div>
             <div className="mt-12 bg-blue-50 rounded-lg shadow-lg p-6 text-center">
               <p className="text-xl italic mb-4">
-                "DTG's AI solutions have completely transformed our operations. We've experienced unprecedented improvements in efficiency and are now leading our industry in innovation. Their strategic, no-nonsense approach has been invaluable to our success."
+                &quot;DTG&apos;s AI solutions have completely transformed our operations. We&apos;ve experienced unprecedented improvements in efficiency and are now leading our industry in innovation. Their strategic, no-nonsense approach has been invaluable to our success.&quot;
               </p>
               <p className="font-semibold">- CEO, Fortune 500 Company</p>
             </div>
