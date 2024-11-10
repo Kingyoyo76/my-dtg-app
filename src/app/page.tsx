@@ -29,10 +29,15 @@ import {
   Banknote,
   Film,
   Building2,
-  Heart
+  Heart,
+  Phone,
+  Download
 } from 'lucide-react'
-import ContactForm from '@/components/ContactForm'
 import { motion } from 'framer-motion'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog"
+import { Label } from "@/components/ui/label"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
 
 const SectionHeader = ({ children }: { children: React.ReactNode }) => (
   <h2 className="text-4xl font-bold mb-6 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-800 to-blue-500">
@@ -86,15 +91,111 @@ const AnimatedText = ({ messages, className }: { messages: string[], className?:
   );
 };
 
+const ContactForm = ({ onClose }: { onClose: () => void }) => {
+  const [firstName, setFirstName] = useState("")
+  const [lastName, setLastName] = useState("")
+  const [role, setRole] = useState("")
+  const [email, setEmail] = useState("")
+  const [message, setMessage] = useState("")
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    // Here you would typically send the form data to your backend
+    console.log("Form submitted:", { firstName, lastName, role, email, message })
+    onClose()
+  }
+
+  return (
+    <Dialog open={true} onOpenChange={onClose}>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Contact Us</DialogTitle>
+          <DialogDescription>
+            Fill out this form and we'll get back to you as soon as possible.
+          </DialogDescription>
+        </DialogHeader>
+        <form onSubmit={handleSubmit}>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="firstName" className="text-right">
+                First Name
+              </Label>
+              <Input
+                id="firstName"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                className="col-span-3"
+                required
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="lastName" className="text-right">
+                Last Name
+              </Label>
+              <Input
+                id="lastName"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                className="col-span-3"
+                required
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="role" className="text-right">
+                Role
+              </Label>
+              <Input
+                id="role"
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+                className="col-span-3"
+                required
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="email" className="text-right">
+                Professional Email
+              </Label>
+              <Input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="col-span-3"
+                required
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="message" className="text-right">
+                What would you like AI to do for you?
+              </Label>
+              <Textarea
+                id="message"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                className="col-span-3"
+                required
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button type="submit">Send Message</Button>
+          </DialogFooter>
+        </form>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
 const features = [
-  { icon: <Brain className="h-10 w-10 text-blue-600" />, title: "UNBREAKABLE AI SOLUTIONS", description: "Our AI isn&apos;t just smart—it&apos;s relentless. We equip your business to tackle its biggest challenges and thrive under pressure." },
-  { icon: <Dumbbell className="h-10 w-10 text-blue-600" />, title: "STRENGTHEN YOUR OPERATIONS", description: "We build processes that don&apos;t just work; they endure. Take your efficiency and resilience to a new level." },
-  { icon: <Flame className="h-10 w-10 text-blue-600" />, title: "FUEL FOR INNOVATION", description: "With DTG&apos;s AI, you don&apos;t follow trends—you set them. Ignite forward-thinking solutions that lead your industry." },
+  { icon: <Brain className="h-10 w-10 text-blue-600" />, title: "UNBREAKABLE AI SOLUTIONS", description: "Our AI isn't just smart—it's relentless. We equip your business to tackle its biggest challenges and thrive under pressure." },
+  { icon: <Dumbbell className="h-10 w-10 text-blue-600" />, title: "STRENGTHEN YOUR OPERATIONS", description: "We build processes that don't just work; they endure. Take your efficiency and resilience to a new level." },
+  { icon: <Flame className="h-10 w-10 text-blue-600" />, title: "FUEL FOR INNOVATION", description: "With DTG's AI, you don't follow trends—you set them. Ignite forward-thinking solutions that lead your industry." },
 ]
 
 const solutions = [
   { icon: <Zap className="h-10 w-10 text-blue-600" />, title: "UNSTOPPABLE AUTOMATION", description: "Automate with power and precision, eliminating inefficiencies that slow your business down." },
-  { icon: <Target className="h-10 w-10 text-blue-600" />, title: "LASER-FOCUSED INSIGHTS", description: "DTG&apos;s AI delivers insights that hit the mark, driving decisions that keep you ahead of the competition." },
+  { icon: <Target className="h-10 w-10 text-blue-600" />, title: "LASER-FOCUSED INSIGHTS", description: "DTG's AI delivers insights that hit the mark, driving decisions that keep you ahead of the competition." },
 ]
 
 const industries = [
@@ -117,7 +218,7 @@ const approachSteps = [
   { title: "IDENTIFY YOUR BATTLEFRONT", desc: "We pinpoint the obstacles holding you back and uncover new opportunities." },
   { title: "BUILD A TAILORED STRATEGY", desc: "Our AI roadmap aligns with your unique goals and business vision." },
   { title: "IMPLEMENT WITH FORCE", desc: "Our team deploys AI solutions with precision, focused on delivering measurable impact." },
-  { title: "ELEVATE & OPTIMIZE", desc: "Our work doesn&apos;t end at implementation. We continually enhance your AI to push further." },
+  { title: "ELEVATE & OPTIMIZE", desc: "Our work doesn't end at implementation. We continually enhance your AI to push further." },
 ]
 
 const impactStats = [
@@ -133,7 +234,7 @@ const caseStudies = [
     industry: "Manufacturing",
     icon: <Briefcase className="h-12 w-12 text-blue-600 mb-4" />,
     challenge: "Inconsistent production and high costs",
-    solution: "DTG&apos;s AI-driven process overhaul",
+    solution: "DTG's AI-driven process overhaul",
     result: "Streamlined production and significant savings",
     metrics: [
       { icon: <TrendingUp className="h-5 w-5 text-green-500" />, label: "Efficiency Boost", value: "135%" },
@@ -145,7 +246,7 @@ const caseStudies = [
     industry: "Education",
     icon: <GraduationCap className="h-12 w-12 text-blue-600 mb-4" />,
     challenge: "Outdated learning systems and disengaged students",
-    solution: "DTG&apos;s adaptive AI learning platform",
+    solution: "DTG's adaptive AI learning platform",
     result: "Increased student engagement and improved outcomes",
     metrics: [
       { icon: <Flame className="h-5 w-5 text-yellow-500" />, label: "Student Engagement", value: "+140%" },
@@ -253,13 +354,22 @@ export default function Home() {
                       </li>
                     ))}
                   </ul>
-                  <div className="mt-8 md:mt-16 flex justify-center">
+                  <div className="mt-8 md:mt-16 flex flex-col sm:flex-row justify-center items-center gap-4">
                     <Button
                       size="lg"
-                      className="bg-blue-600 hover:bg-blue-700 text-white text-2xl px-10 py-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+                      className="bg-blue-600 hover:bg-blue-700 text-white text-sm sm:text-base md:text-lg lg:text-xl px-4 py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 w-full sm:w-auto"
                       onClick={() => setShowContactForm(true)}
                     >
-                      UNLEASH AI POWER NOW
+                      <Phone className="mr-2 h-4 w-4 sm:h-5 sm:w-5" /> 
+                      <span className="whitespace-nowrap">UNLEASH AI POWER</span>
+                    </Button>
+                    <Button
+                      size="lg"
+                      className="bg-red-600 hover:bg-red-700 text-white text-sm sm:text-base md:text-lg lg:text-xl px-4 py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 w-full sm:w-auto"
+                      onClick={() => setShowContactForm(true)}
+                    >
+                      <Download className="mr-2 h-4 w-4 sm:h-5 sm:w-5" /> 
+                      <span className="whitespace-nowrap">FREE EBOOK</span>
                     </Button>
                   </div>
                 </motion.div>
@@ -278,16 +388,166 @@ export default function Home() {
                     height={800}
                     className="rounded-lg shadow-2xl object-cover w-full h-full"
                   />
-                  <div className="absolute -bottom-8 -right-8 bg-blue-600 text-white p-4 rounded-lg shadow-lg transform rotate-12">
+                  {/* SDVOSB Logo Overlay */}
+                  <div className="absolute top-[61%] left-[58%] w-[15%] h-auto aspect-square rounded-full overflow-hidden bg-white shadow-lg">
+                    <Image
+                      src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-nKt2tH7WnchJCSdVokTgUfF11bts7L.png"
+                      alt="SDVOSB Certification"
+                      width={200}
+                      height={200}
+                      className="w-full h-full object-contain p-2"
+                    />
+                  </div>
+                  {/* Veteran Business Tag */}
+                  <div className="absolute bottom-4 right-4 bg-white text-blue-800 p-2 rounded-lg shadow-lg">
                     <div className="flex items-center gap-2">
-                      <Award className="h-6 w-6" />
+                      <Award className="h-6 w-6 text-red-700" />
                       <p className="text-sm font-medium">
-                        Service-Disabled Veteran-Owned Business
+                        <span className="text-red-700">Service-Disabled</span>{" "}
+                        <span className="text-blue-800">Veteran-Owned Business</span>
                       </p>
                     </div>
                   </div>
                 </div>
               </motion.div>
+            </div>
+          </div>
+        </section>
+
+        <section className="py-16 bg-blue-600 text-white">
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl font-bold mb-12 text-center">THE IMPACT OF OUR AI SOLUTIONS</h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+              {impactStats.map((stat, index) => (
+                <div key={index} className="text-center">
+                  <p className="text-5xl font-bold mb-2">{stat.value}</p>
+                  <p className="text-xl">{stat.label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="approach" className="py-16 bg-white">
+          <div className="container mx-auto px-4">
+            <SectionHeader>OUR AI IMPLEMENTATION APPROACH</SectionHeader>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {approachSteps.map((step, index) => (
+                <Card key={index}>
+                  <CardContent className="p-6">
+                    <div className="text-3xl font-bold text-blue-600 mb-2">{index + 1}</div>
+                    <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
+                    <p className="text-gray-600">{step.desc}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="industries" className="py-16 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <SectionHeader>INDUSTRY-SPECIFIC AI SOLUTIONS</SectionHeader>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {industries.map((industry, index) => (
+                <Card key={index}>
+                  <CardContent className="p-6">
+                    {industry.icon}
+                    <h3 className="text-xl font-semibold mb-2">{industry.title}</h3>
+                    <ul className="list-disc list-inside text-gray-600">
+                      {industry.items.map((item, itemIndex) => (
+                        <li key={itemIndex}>{item}</li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="case-studies" className="py-16 bg-white">
+          <div className="container mx-auto px-4">
+            <SectionHeader>AI SUCCESS STORIES</SectionHeader>
+            <div className="grid md:grid-cols-2 gap-8">
+              {caseStudies.map((study, index) => (
+                <Card key={index} className="overflow-hidden">
+                  <CardContent className="p-6">
+                    <div className="flex items-center mb-4">
+                      {study.icon}
+                      <div className="ml-4">
+                        <h3 className="text-2xl font-bold">{study.company}</h3>
+                        <p className="text-blue-600 font-semibold">{study.industry}</p>
+                      </div>
+                    </div>
+                    <div className="space-y-4">
+                      <div>
+                        <h4 className="font-semibold text-lg mb-2">Challenge:</h4>
+                        <p className="text-gray-600">{study.challenge}</p>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-lg mb-2">DTG's Solution:</h4>
+                        <p className="text-gray-600">{study.solution}</p>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-lg mb-2">Results:</h4>
+                        <p className="text-green-600 font-semibold">{study.result}</p>
+                      </div>
+                    </div>
+                    <div className="mt-6 pt-6 border-t border-gray-200">
+                      <h4 className="font-semibold text-lg mb-4">Key Metrics:</h4>
+                      <div className="flex justify-around">
+                        {study.metrics.map((metric, idx) => (
+                          <div key={idx} className="text-center">
+                            <div className="flex justify-center mb-2">{metric.icon}</div>
+                            <p className="text-sm text-gray-600">{metric.label}</p>
+                            <p className="text-lg font-bold text-blue-600">{metric.value}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="contact" className="py-16 bg-gradient-to-r from-blue-600 to-blue-800 text-white">
+          <div className="container mx-auto px-4 text-center">
+            <h2 className="text-4xl font-bold mb-6">READY TO DOMINATE YOUR INDUSTRY WITH AI?</h2>
+            <p className="text-xl mb-8 max-w-3xl mx-auto">
+              Don't just keep up with change – lead it. Partner with DTG's AI experts to unlock unprecedented levels of efficiency, innovation, and growth. Our battle-tested solutions are ready to elevate your business to industry-leading status.
+            </p>
+            <Button
+              size="lg"
+              className="bg-white text-blue-600 hover:bg-gray-100 text-sm sm:text-base md:text-lg lg:text-xl px-4 py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 w-full sm:w-auto"
+              onClick={() => setShowContactForm(true)}
+            >
+              <span className="whitespace-nowrap">START YOUR AI REVOLUTION</span>
+            </Button>
+          </div>
+        </section>
+
+        <section id="advantage" className="py-16 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <SectionHeader>THE DTG AI ADVANTAGE</SectionHeader>
+            <p className="text-xl text-center mb-12 text-gray-600">
+              Partner with DTG to leverage AI for unparalleled growth and industry dominance.
+            </p>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {advantages.map((advantage, index) => (
+                <div key={index} className="flex items-center bg-blue-50 rounded-lg shadow p-4">
+                  <CheckCircle className="h-6 w-6 text-blue-500 mr-2" />
+                  <span className="text-lg font-semibold">{advantage}</span>
+                </div>
+              ))}
+            </div>
+            <div className="mt-12 bg-blue-50 rounded-lg shadow-lg p-6 text-center">
+              <p className="text-xl italic mb-4">
+                "DTG's AI solutions have completely transformed our operations. We've experienced unprecedented improvements in efficiency and are now leading our industry in innovation. Their strategic, no-nonsense approach has been invaluable to our success."
+              </p>
+              <p className="font-semibold">- CEO, Fortune 500 Company</p>
             </div>
           </div>
         </section>
@@ -315,7 +575,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="solutions" className="py-16 bg-white">
+        <section id="solutions" className="py-16 bg-sky-50">
           <div className="container mx-auto px-4">
             <SectionHeader>DOMINATE WITH AI-POWERED SOLUTIONS</SectionHeader>
             <div className="text-xl text-center mb-12 text-gray-600 space-y-2">
@@ -330,150 +590,12 @@ export default function Home() {
             <div className="text-center mt-12">
               <Button
                 size="lg"
-                className="bg-blue-600 hover:bg-blue-700 text-white text-xl px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+                className="bg-blue-600 hover:bg-blue-700 text-white text-sm sm:text-base md:text-lg lg:text-xl px-4 py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 w-full sm:w-auto"
                 onClick={() => setShowContactForm(true)}
               >
-                SCHEDULE YOUR AI STRATEGY SESSION
+                <span className="whitespace-nowrap">SCHEDULE AI STRATEGY SESSION</span>
               </Button>
             </div>
-          </div>
-        </section>
-
-        <section id="industries" className="py-16 bg-gray-50">
-  <div className="container mx-auto px-4">
-    <SectionHeader>INDUSTRY-SPECIFIC AI SOLUTIONS</SectionHeader>
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {industries.map((industry, index) => (
-        <Card key={index}>
-          <CardContent className="p-6">
-            {industry.icon}
-            <h3 className="text-xl font-semibold mb-2">{industry.title}</h3>
-            <ul className="list-disc list-inside text-gray-600">
-              {industry.items.map((item, itemIndex) => (
-                <li key={itemIndex}>{item}</li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
-      ))}
-    </div>
-  </div>
-</section>
-
-        <section id="case-studies" className="py-16 bg-white">
-          <div className="container mx-auto px-4">
-            <SectionHeader>AI SUCCESS STORIES</SectionHeader>
-            <div className="grid md:grid-cols-2 gap-8">
-              {caseStudies.map((study, index) => (
-                <Card key={index} className="overflow-hidden">
-                  <CardContent className="p-6">
-                    <div className="flex items-center mb-4">
-                      {study.icon}
-                      <div className="ml-4">
-                        <h3 className="text-2xl font-bold">{study.company}</h3>
-                        <p className="text-blue-600 font-semibold">{study.industry}</p>
-                      </div>
-                    </div>
-                    <div className="space-y-4">
-                      <div>
-                        <h4 className="font-semibold text-lg mb-2">Challenge:</h4>
-                        <p className="text-gray-600">{study.challenge}</p>
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-lg mb-2">DTG&apos;s Solution:</h4>
-                        <p className="text-gray-600">{study.solution}</p>
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-lg mb-2">Results:</h4>
-                        <p className="text-green-600 font-semibold">{study.result}</p>
-                      </div>
-                    </div>
-                    <div className="mt-6 pt-6 border-t border-gray-200">
-                      <h4 className="font-semibold text-lg mb-4">Key Metrics:</h4>
-                      <div className="flex justify-around">
-                        {study.metrics.map((metric, idx) => (
-                          <div key={idx} className="text-center">
-                            <div className="flex justify-center mb-2">{metric.icon}</div>
-                            <p className="text-sm text-gray-600">{metric.label}</p>
-                            <p className="text-lg font-bold text-blue-600">{metric.value}</p>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="advantage" className="py-16 bg-gray-50">
-          <div className="container mx-auto px-4">
-            <SectionHeader>THE DTG AI ADVANTAGE</SectionHeader>
-            <p className="text-xl text-center mb-12 text-gray-600">
-              Partner with DTG to leverage AI for unparalleled growth and industry dominance.
-            </p>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {advantages.map((advantage, index) => (
-                <div key={index} className="flex items-center bg-blue-50 rounded-lg shadow p-4">
-                  <CheckCircle className="h-6 w-6 text-blue-500 mr-2" />
-                  <span className="text-lg font-semibold">{advantage}</span>
-                </div>
-              ))}
-            </div>
-            <div className="mt-12 bg-blue-50 rounded-lg shadow-lg p-6 text-center">
-              <p className="text-xl italic mb-4">
-                &quot;DTG&apos;s AI solutions have completely transformed our operations. We&apos;ve experienced unprecedented improvements in efficiency and are now leading our industry in innovation. Their strategic, no-nonsense approach has been invaluable to our success.&quot;
-              </p>
-              <p className="font-semibold">- CEO, Fortune 500 Company</p>
-            </div>
-          </div>
-        </section>
-
-        <section id="approach" className="py-16 bg-white">
-          <div className="container mx-auto px-4">
-            <SectionHeader>OUR AI IMPLEMENTATION APPROACH</SectionHeader>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {approachSteps.map((step, index) => (
-                <Card key={index}>
-                  <CardContent className="p-6">
-                    <div className="text-3xl font-bold text-blue-600 mb-2">{index + 1}</div>
-                    <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
-                    <p className="text-gray-600">{step.desc}</p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="py-16 bg-blue-600 text-white">
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold mb-12 text-center">THE IMPACT OF OUR AI SOLUTIONS</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              {impactStats.map((stat, index) => (
-                <div key={index} className="text-center">
-                  <p className="text-5xl font-bold mb-2">{stat.value}</p>
-                  <p className="text-xl">{stat.label}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="contact" className="py-16 bg-gradient-to-r from-blue-600 to-blue-800 text-white">
-          <div className="container mx-auto px-4 text-center">
-            <h2 className="text-4xl font-bold mb-6">READY TO DOMINATE YOUR INDUSTRY WITH AI?</h2>
-            <p className="text-xl mb-8 max-w-3xl mx-auto">
-              Don&apos;t just keep up with change – lead it. Partner with DTG&apos;s AI experts to unlock unprecedented levels of efficiency, innovation, and growth. Our battle-tested solutions are ready to elevate your business to industry-leading status.
-            </p>
-            <Button
-              size="lg"
-              className="bg-white text-blue-600 hover:bg-gray-100 text-xl px-8 py-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
-              onClick={() => setShowContactForm(true)}
-            >
-              START YOUR AI REVOLUTION WITH DTG
-            </Button>
           </div>
         </section>
       </main>
