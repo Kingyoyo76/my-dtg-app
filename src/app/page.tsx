@@ -1,382 +1,87 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image'
+import { motion } from 'framer-motion'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import {
-  Brain,
-  Zap,
-  Cpu,
-  Target,
-  BarChart,
-  CheckCircle,
-  Award,
-  Rocket,
-  ArrowRight,
-  Menu,
-  X,
-  Sparkles,
-  Code,
-  Dumbbell,
-  Flame,
-  TrendingUp,
-  Lightbulb,
-  Shield,
-  ExternalLink,
-  Briefcase,
-  GraduationCap,
-  Banknote,
-  Film,
-  Building2,
-  Heart,
-  Phone,
-  Download
-} from 'lucide-react'
-import { motion } from 'framer-motion'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog"
-import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-
-const SectionHeader = ({ children }: { children: React.ReactNode }) => (
-  <h2 className="text-4xl font-bold mb-6 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-800 to-blue-500">
-    {children}
-  </h2>
-)
-
-const FeatureCard = ({ icon, title, description }: { icon: React.ReactNode, title: string, description: string }) => (
-  <motion.div
-    whileHover={{ scale: 1.05 }}
-    className="bg-white rounded-lg shadow-lg p-6 transition-all duration-300 hover:shadow-xl border border-blue-100"
-  >
-    <div className="flex items-center mb-4">
-      {icon}
-      <h3 className="text-xl font-semibold ml-3">{title}</h3>
-    </div>
-    <p className="text-gray-600">{description}</p>
-  </motion.div>
-)
-
-const AnimatedText = ({ messages, className }: { messages: string[], className?: string }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % messages.length);
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, [messages.length]);
-
-  return (
-    <div className={`h-32 overflow-hidden ${className}`}>
-      {messages.map((message, index) => (
-        <motion.div
-          key={index}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: index === currentIndex ? 1 : 0, y: index === currentIndex ? 0 : 20 }}
-          transition={{ duration: 0.5 }}
-          className={`flex items-center justify-center gap-3 mb-4 ${index === currentIndex ? 'block' : 'hidden'}`}
-        >
-          {index === 0 && <Dumbbell className="h-10 w-10 text-blue-600 flex-shrink-0" />}
-          {index === 1 && <Flame className="h-10 w-10 text-blue-600 flex-shrink-0" />}
-          {index === 2 && <Target className="h-10 w-10 text-blue-600 flex-shrink-0" />}
-          {index === 3 && <Brain className="h-10 w-10 text-blue-600 flex-shrink-0" />}
-          {index === 4 && <Rocket className="h-10 w-10 text-blue-600 flex-shrink-0" />}
-          <p className="text-3xl font-bold">{message}</p>
-        </motion.div>
-      ))}
-    </div>
-  );
-};
-
-const ContactForm = ({ onClose }: { onClose: () => void }) => {
-  const [firstName, setFirstName] = useState("")
-  const [lastName, setLastName] = useState("")
-  const [role, setRole] = useState("")
-  const [email, setEmail] = useState("")
-  const [message, setMessage] = useState("")
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Here you would typically send the form data to your backend
-    console.log("Form submitted:", { firstName, lastName, role, email, message })
-    onClose()
-  }
-
-  return (
-    <Dialog open={true} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Contact Us</DialogTitle>
-          <DialogDescription>
-            Fill out this form and we&apos;ll get back to you as soon as possible.
-          </DialogDescription>
-        </DialogHeader>
-        <form onSubmit={handleSubmit}>
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="firstName" className="text-right">
-                First Name
-              </Label>
-              <Input
-                id="firstName"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                className="col-span-3"
-                required
-              />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="lastName" className="text-right">
-                Last Name
-              </Label>
-              <Input
-                id="lastName"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-                className="col-span-3"
-                required
-              />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="role" className="text-right">
-                Role
-              </Label>
-              <Input
-                id="role"
-                value={role}
-                onChange={(e) => setRole(e.target.value)}
-                className="col-span-3"
-                required
-              />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="email" className="text-right">
-                Professional Email
-              </Label>
-              <Input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="col-span-3"
-                required
-              />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="message" className="text-right">
-                What would you like AI to do for you?
-              </Label>
-              <Textarea
-                id="message"
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                className="col-span-3"
-                required
-              />
-            </div>
-          </div>
-          <DialogFooter>
-            <Button type="submit">Send Message</Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
-  )
-}
-
-const features = [
-  { icon: <Brain className="h-10 w-10 text-blue-600" />, title: "UNBREAKABLE AI SOLUTIONS", description: "Our AI isn&apos;t just smart—it&apos;s relentless. We equip your business to tackle its biggest challenges and thrive under pressure." },
-  { icon: <Dumbbell className="h-10 w-10 text-blue-600" />, title: "STRENGTHEN YOUR OPERATIONS", description: "We build processes that don&apos;t just work; they endure. Take your efficiency and resilience to a new level." },
-  { icon: <Flame className="h-10 w-10 text-blue-600" />, title: "FUEL FOR INNOVATION", description: "With DTG&apos;s AI, you don&apos;t follow trends—you set them. Ignite forward-thinking solutions that lead your industry." },
-]
-
-const solutions = [
-  { icon: <Zap className="h-10 w-10 text-blue-600" />, title: "UNSTOPPABLE AUTOMATION", description: "Automate with power and precision, eliminating inefficiencies that slow your business down." },
-  { icon: <Target className="h-10 w-10 text-blue-600" />, title: "LASER-FOCUSED INSIGHTS", description: "DTG&apos;s AI delivers insights that hit the mark, driving decisions that keep you ahead of the competition." },
-]
-
-const industries = [
-  { icon: <GraduationCap className="h-10 w-10 text-blue-600 mb-4" />, title: "Education", items: ["Unlock student potential", "Maximize administrative efficiency", "Advance research initiatives"] },
-  { icon: <Briefcase className="h-10 w-10 text-blue-600 mb-4" />, title: "Manufacturing", items: ["Optimized production", "Top-tier quality assurance", "Enhanced supply chain resilience"] },
-  { icon: <Banknote className="h-10 w-10 text-blue-600 mb-4" />, title: "Financial Services", items: ["Risk reduction", "Proactive fraud detection", "Unparalleled customer experience"] },
-  { icon: <Film className="h-10 w-10 text-blue-600 mb-4" />, title: "Media", items: ["Innovative content strategies", "Seamless video processing", "Precision audience targeting"] },
-  { icon: <Building2 className="h-10 w-10 text-blue-600 mb-4" />, title: "Hospitality", items: ["Personalized guest experiences", "Efficient staff allocation", "Streamlined operations"] },
-  { icon: <Heart className="h-10 w-10 text-blue-600 mb-4" />, title: "Healthcare", items: ["Enhanced patient care", "Optimized workflows", "Data security and compliance"] }
-]
-
-const advantages = [
-  "AI Solutions That Defy Limits",
-  "Seamless Integration for Maximum Impact",
-  "24/7 Support and Reliability",
-  "Results That Give You the Edge"
-]
-
-const approachSteps = [
-  { title: "IDENTIFY YOUR BATTLEFRONT", desc: "We pinpoint the obstacles holding you back and uncover new opportunities." },
-  { title: "BUILD A TAILORED STRATEGY", desc: "Our AI roadmap aligns with your unique goals and business vision." },
-  { title: "IMPLEMENT WITH FORCE", desc: "Our team deploys AI solutions with precision, focused on delivering measurable impact." },
-  { title: "ELEVATE & OPTIMIZE", desc: "Our work doesn&apos;t end at implementation. We continually enhance your AI to push further." },
-]
-
-const impactStats = [
-  { value: "40%", label: "Efficiency Increase" },
-  { value: "50%", label: "Cost Savings" },
-  { value: "3x", label: "Decision Speed" },
-  { value: "100%", label: "Commitment to Your Success" },
-]
-
-const caseStudies = [
-  {
-    company: "Global Manufacturing Corp",
-    industry: "Manufacturing",
-    icon: <Briefcase className="h-12 w-12 text-blue-600 mb-4" />,
-    challenge: "Inconsistent production and high costs",
-    solution: "DTG created an AI-driven process overhaul system",
-    result: "Streamlined production and significant savings",
-    metrics: [
-      { icon: <TrendingUp className="h-5 w-5 text-green-500" />, label: "Efficiency Boost", value: "135%" },
-      { icon: <BarChart className="h-5 w-5 text-blue-500" />, label: "Cost Savings", value: "$5M" },
-    ]
-  },
-  {
-    company: "TechEd Innovations",
-    industry: "Education",
-    icon: <GraduationCap className="h-12 w-12 text-blue-600 mb-4" />,
-    challenge: "Outdated learning systems and disengaged students",
-    solution: "DTG created an adaptive AI learning platform",
-    result: "Increased student engagement and improved outcomes",
-    metrics: [
-      { icon: <Flame className="h-5 w-5 text-yellow-500" />, label: "Student Engagement", value: "+140%" },
-      { icon: <Target className="h-5 w-5 text-red-500" />, label: "Performance Improvement", value: "85%" },
-    ]
-  }
-]
+import { 
+  Sparkles, Brain, Cpu, Code, Rocket, Phone, Download, Award,
+  Briefcase, GraduationCap, Banknote, Film, Building2, Heart,
+  TrendingUp, Flame, Target, Zap, BarChart, Database, Shield, CheckCircle,
+  ExternalLink, MapPin, Mail, Menu, X
+} from 'lucide-react'
 
 export default function Home() {
-  const [isLoaded, setIsLoaded] = useState(false)
   const [showContactForm, setShowContactForm] = useState(false)
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-
-  useEffect(() => {
-    setIsLoaded(true)
-    console.log('Page component mounted')
-  }, [])
-
-  if (!isLoaded) {
-    return <div>Loading...</div>
-  }
+  const [menuOpen, setMenuOpen] = useState(false)
 
   const scrollToSection = (sectionId: string) => {
-    const section = document.getElementById(sectionId)
-    if (section) {
-      section.scrollIntoView({ behavior: 'smooth' })
+    const element = document.getElementById(sectionId)
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' })
     }
-    setMobileMenuOpen(false)
+    setMenuOpen(false)
+  }
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    console.log('Form submitted')
+    setShowContactForm(false)
   }
 
   return (
-    <div className="min-h-screen bg-white text-gray-900">
-      <header className="bg-white shadow-sm fixed w-full z-50">
-        <nav className="container mx-auto px-4 py-4 flex justify-between items-center">
+    <div className="min-h-screen flex flex-col">
+      {/* Header */}
+      <header className="bg-white shadow-md">
+        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center">
             <Image
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202024-10-25%20171623-QBQnvTq6phEC2AsFTXjmLoRqfjxxlv.png"
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-placeholder-XTTqwo0HZdD1BWMqDaHJICXaAUEsro.png"
               alt="DTG Logo"
               width={200}
-              height={60}
-              className="h-16 w-auto"
-              priority
+              height={50}
+              className="h-12 w-auto"
             />
           </div>
-          <ul className="hidden md:flex space-x-6">
-            {['Solutions', 'Industries', 'Approach', 'Contact'].map((item) => (
-              <li key={item}>
-                <button
-                  onClick={() => scrollToSection(item.toLowerCase())}
-                  className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer"
-                >
-                  {item}
-                </button>
-              </li>
-            ))}
-          </ul>
-          <Button className="md:hidden" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-            {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </Button>
-        </nav>
-        {mobileMenuOpen && (
-          <div className="md:hidden bg-white py-2">
-            <ul className="flex flex-col items-center space-y-2">
-              {['Solutions', 'Industries', 'Approach', 'Contact'].map((item) => (
-                <li key={item}>
-                  <button
-                    onClick={() => scrollToSection(item.toLowerCase())}
-                    className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer"
-                  >
-                    {item}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+          <nav className="hidden md:flex space-x-4">
+            <button onClick={() => scrollToSection('hero')} className="text-gray-600 hover:text-blue-600">Home</button>
+            <button onClick={() => scrollToSection('approach')} className="text-gray-600 hover:text-blue-600">Our Approach</button>
+            <button onClick={() => scrollToSection('industries')} className="text-gray-600 hover:text-blue-600">Industries</button>
+            <button onClick={() => scrollToSection('case-studies')} className="text-gray-600 hover:text-blue-600">Case Studies</button>
+            <button onClick={() => scrollToSection('advantage')} className="text-gray-600 hover:text-blue-600">Our Advantage</button>
+            <button onClick={() => setShowContactForm(true)} className="text-gray-600 hover:text-blue-600">Contact</button>
+          </nav>
+          <button className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
+            {menuOpen ? <X /> : <Menu />}
+          </button>
+        </div>
       </header>
 
-      <main className="pt-24">
-        <section id="hero" className="py-16 overflow-hidden">
+      {/* Mobile Menu */}
+      {menuOpen && (
+        <div className="md:hidden bg-white shadow-md">
+          <nav className="container mx-auto px-4 py-4 flex flex-col space-y-2">
+            <button onClick={() => scrollToSection('hero')} className="text-gray-600 hover:text-blue-600">Home</button>
+            <button onClick={() => scrollToSection('approach')} className="text-gray-600 hover:text-blue-600">Our Approach</button>
+            <button onClick={() => scrollToSection('industries')} className="text-gray-600 hover:text-blue-600">Industries</button>
+            <button onClick={() => scrollToSection('case-studies')} className="text-gray-600 hover:text-blue-600">Case Studies</button>
+            <button onClick={() => scrollToSection('advantage')} className="text-gray-600 hover:text-blue-600">Our Advantage</button>
+            <button onClick={() => setShowContactForm(true)} className="text-gray-600 hover:text-blue-600">Contact</button>
+          </nav>
+        </div>
+      )}
+
+      <main className="flex-grow">
+        {/* Hero Section */}
+        <section id="hero" className="py-16 md:py-24 overflow-hidden bg-white text-gray-900">
           <div className="container mx-auto px-4">
             <div className="flex flex-col md:flex-row items-center gap-12">
-              <div className="md:w-1/2 flex flex-col justify-between h-full">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6 }}
-                >
-                  <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight text-blue-800">
-                    <span className="block">DOMINATE YOUR INDUSTRY</span>
-                    <span className="block text-blue-600">WITH AI-POWERED SOLUTIONS</span>
-                    <span className="block">ENGINEERED BY DTG</span>
-                  </h1>
-                  <ul className="space-y-4 mb-8">
-                    {[
-                      { icon: <Sparkles className="h-6 w-6 text-blue-600 inline mr-2" />, text: "Revolutionize Your Operations with AI" },
-                      { icon: <Brain className="h-6 w-6 text-blue-600 inline mr-2" />, text: "Harness Unbreakable AI Integration" },
-                      { icon: <Cpu className="h-6 w-6 text-blue-600 inline mr-2" />, text: "Optimize for Peak Performance" },
-                      { icon: <Code className="h-6 w-6 text-blue-600 inline mr-2" />, text: "Seamless Implementation, Tangible Results" },
-                      { icon: <Rocket className="h-6 w-6 text-blue-600 inline mr-2" />, text: "Propel Your Business to New Heights" }
-                    ].map((item, index) => (
-                      <li key={index} className="flex items-start">
-                        {item.icon}
-                        <span className="text-xl md:text-2xl font-bold text-gray-700">{item.text}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="mt-8 md:mt-16 flex flex-col sm:flex-row justify-center items-center gap-4">
-                    <Button
-                      size="lg"
-                      className="bg-blue-600 hover:bg-blue-700 text-white text-sm sm:text-base md:text-lg lg:text-xl px-4 py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 w-full sm:w-auto"
-                      onClick={() => setShowContactForm(true)}
-                    >
-                      <Phone className="mr-2 h-4 w-4 sm:h-5 sm:w-5" /> 
-                      <span className="whitespace-nowrap">UNLEASH AI POWER</span>
-                    </Button>
-                    <Button
-                      size="lg"
-                      className="bg-red-600 hover:bg-red-700 text-white text-sm sm:text-base md:text-lg lg:text-xl px-4 py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 w-full sm:w-auto"
-                      onClick={() => setShowContactForm(true)}
-                    >
-                      <Download className="mr-2 h-4 w-4 sm:h-5 sm:w-5" /> 
-                      <span className="whitespace-nowrap">FREE EBOOK</span>
-                    </Button>
-                  </div>
-                </motion.div>
-              </div>
               <motion.div
-                className="md:w-1/2"
-                initial={{ opacity: 0, x: 100 }}
+                className="md:w-1/2 order-2 md:order-1"
+                initial={{ opacity: 0, x: -100 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8 }}
               >
@@ -388,7 +93,6 @@ export default function Home() {
                     height={800}
                     className="rounded-lg shadow-2xl object-cover w-full h-full"
                   />
-                  {/* SDVOSB Logo Overlay */}
                   <div className="absolute top-[61%] left-[58%] w-[15%] h-auto aspect-square rounded-full overflow-hidden bg-white shadow-lg">
                     <Image
                       src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-nKt2tH7WnchJCSdVokTgUfF11bts7L.png"
@@ -398,11 +102,10 @@ export default function Home() {
                       className="w-full h-full object-contain p-2"
                     />
                   </div>
-                  {/* Veteran Business Tag */}
                   <div className="absolute bottom-4 right-4 bg-white text-blue-800 p-2 rounded-lg shadow-lg">
                     <div className="flex items-center gap-2">
-                      <Award className="h-6 w-6 text-red-700" />
-                      <p className="text-sm font-medium">
+                      <Award className="h-5 w-5 text-red-700" />
+                      <p className="text-xs font-medium">
                         <span className="text-red-700">Service-Disabled</span>{" "}
                         <span className="text-blue-800">Veteran-Owned Business</span>
                       </p>
@@ -410,184 +113,474 @@ export default function Home() {
                   </div>
                 </div>
               </motion.div>
+              <div className="md:w-1/2 flex flex-col justify-between h-full order-1 md:order-2">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <h1 className="text-3xl md:text-4xl font-bold mb-6 leading-tight text-blue-800">
+                    <span className="block mb-2 text-sky-400">BOOST EFFICIENCY!</span>
+                    <span className="block mb-2">ACHIEVE MORE &amp; SAVE TIME!</span>
+                    <span className="block mb-2 text-sky-400">SPEND LESS!</span>
+                    <span className="block text-blue-600">WITH ENTERPRISE-LEVEL AI</span>
+                    <span className="block">POWERED BY DTG AI EXPERTISE</span>
+                  </h1>
+                  <ul className="space-y-4 mb-8">
+                    {[
+                      { icon: <Sparkles className="h-5 w-5 text-blue-600 inline mr-2" />, text: "Revolutionize Operations with Proven AI" },
+                      { icon: <Brain className="h-5 w-5 text-blue-600 inline mr-2" />, text: "Build AI Agents That Work for You" },
+                      { icon: <Cpu className="h-5 w-5 text-blue-600 inline mr-2" />, text: "Optimize for Peak Performance" },
+                      { icon: <Code className="h-5 w-5 text-blue-600 inline mr-2" />, text: "No-Code Solutions, Maximum Impact" },
+                      { icon: <Rocket className="h-5 w-5 text-blue-600 inline mr-2" />, text: "Expert AI Strategies, Real Results" }
+                    ].map((item, index) => (
+                      <li key={index} className="flex items-start">
+                        {item.icon}
+                        <span className="text-lg md:text-xl font-semibold text-gray-700">{item.text}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="mt-8 md:mt-12 flex flex-col sm:flex-row justify-start items-center gap-4">
+                    <Button
+                      size="lg"
+                      className="bg-blue-600 hover:bg-blue-700 text-white text-base lg:text-lg px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 w-full sm:w-auto"
+                      onClick={() => setShowContactForm(true)}
+                    >
+                      <Phone className="mr-2 h-4 w-4" /> 
+                      UNLEASH AI POWER NOW
+                    </Button>
+                    <Button
+                      size="lg"
+                      className="bg-red-600 hover:bg-red-700 text-white text-base lg:text-lg px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 w-full sm:w-auto"
+                      onClick={() => setShowContactForm(true)}
+                    >
+                      <Download className="mr-2 h-4 w-4" /> 
+                      GET AI ROADMAP
+                    </Button>
+                  </div>
+                </motion.div>
+              </div>
             </div>
           </div>
         </section>
 
-        <section className="py-16 bg-blue-600 text-white">
+        {/* AI Strategy Section */}
+        <section id="approach" className="py-16 bg-sky-100">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold mb-12 text-center">THE IMPACT OF OUR AI SOLUTIONS</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              {impactStats.map((stat, index) => (
-                <div key={index} className="text-center">
-                  <p className="text-5xl font-bold mb-2">{stat.value}</p>
-                  <p className="text-xl">{stat.label}</p>
-                </div>
-              ))}
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-blue-800">
+                HOW YOUR AI DOMINATION STRATEGY WORKS
+              </h2>
             </div>
-          </div>
-        </section>
-
-        <section id="approach" className="py-16 bg-white">
-          <div className="container mx-auto px-4">
-            <SectionHeader>OUR AI IMPLEMENTATION APPROACH</SectionHeader>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {approachSteps.map((step, index) => (
-                <Card key={index}>
-                  <CardContent className="p-6">
-                    <div className="text-3xl font-bold text-blue-600 mb-2">{index + 1}</div>
-                    <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
-                    <p className="text-gray-600">{step.desc}</p>
-                  </CardContent>
-                </Card>
+              {[
+                { number: "1", title: "ASSESSMENT", desc: ["We Work With You &", "Identify Your Operational Challenges"] },
+                { number: "2", title: "MAPPING", desc: ["We Strategically Map Out", "A Plan with a Tailored AI Strategy"] },
+                { number: "3", title: "IMPLEMENTATION", desc: ["We Deploy & Test", "Adjust & Fine Tune"] },
+                { number: "4", title: "EVOLUTION", desc: ["We Continuously Help You Evolve", "Your AI Capabilities"] },
+              ].map((step, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="h-full"
+                >
+                  <Card className="h-full flex flex-col bg-white">
+                    <CardContent className="p-6 flex flex-col justify-between h-full">
+                      <div>
+                        <div className="flex items-center mb-4">
+                          <span className="text-3xl font-bold text-blue-600 mr-2">{step.number}:</span>
+                          <h3 className="text-xl font-semibold">{step.title}</h3>
+                        </div>
+                        <div className="text-gray-600">
+                          <p>{step.desc[0]}</p>
+                          <p className="mt-2">{step.desc[1]}</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
               ))}
             </div>
           </div>
         </section>
 
+        {/* Expected Results Section */}
+        <section className="py-16 bg-blue-50 text-gray-900">
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl font-bold mb-12 text-center text-blue-800">EXPECTED RESULTS</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              {[
+                { value: "40%", effect: "Efficiency Increase", description: "While Competitors Struggle, You Accelerate" },
+                { value: "50%", effect: "Cost Savings", description: "Cut Expenses, Not Capabilities" },
+                { value: "3x", effect: "Faster Decisions", description: "Outmaneuver the Market" },
+                { value: "100%", effect: "Commitment", description: "Your AI Transformation, Our Relentless Execution" },
+              ].map((stat, index) => (
+                <motion.div
+                  key={index}
+                  className="text-center"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                >
+                  <p className="text-4xl md:text-5xl font-bold mb-2 text-blue-800">{stat.value}</p>
+                  <p className="text-xl md:text-2xl font-semibold mb-1 text-blue-600">{stat.effect}</p>
+                  <p className="text-lg md:text-xl text-gray-700">{stat.description}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Industry Solutions Section */}
         <section id="industries" className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
-            <SectionHeader>INDUSTRY-SPECIFIC AI SOLUTIONS</SectionHeader>
+            <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-800 to-blue-500">
+              INDUSTRY-SPECIFIC <span className="text-red-600">AI</span> SOLUTIONS
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {industries.map((industry, index) => (
-                <Card key={index}>
-                  <CardContent className="p-6">
-                    {industry.icon}
-                    <h3 className="text-xl font-semibold mb-2">{industry.title}</h3>
-                    <ul className="list-disc list-inside text-gray-600">
-                      {industry.items.map((item, itemIndex) => (
-                        <li key={itemIndex}>{item}</li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
+              {[
+                { 
+                  icon: <GraduationCap className="h-12 w-12 text-blue-600" />, 
+                  title: "Education", 
+                  items: [
+                "Transform Traditional Learning Barriers", 
+                    "Streamline Administrative Processes", 
+                    "Accelerate Research at Unprecedented Speeds"
+                  ] },
+                { 
+                  icon: <Briefcase className="h-12 w-12 text-red-600" />, 
+                  title: "Manufacturing", 
+                  items: [
+                    "Revolutionize Production Efficiency", 
+                    "Implement Uncompromising Quality Control", 
+                    "Create a Resilient Supply Chain"
+                  ] 
+                },
+                { 
+                  icon: <Banknote className="h-12 w-12 text-blue-600" />, 
+                  title: "Financial Services", 
+                  items: [
+                    "Mitigate Risk with Predictive AI", 
+                    "Deploy Advanced Fraud Detection", 
+                    "Deliver Hyper-Personalized Customer Experiences"
+                  ] 
+                },
+                { 
+                  icon: <Film className="h-12 w-12 text-red-600" />, 
+                  title: "Media", 
+                  items: [
+                    "Craft AI-Driven Content Strategies", 
+                    "Implement Rapid Video Processing", 
+                    "Execute Precise Audience Targeting"
+                  ] 
+                },
+                { 
+                  icon: <Building2 className="h-12 w-12 text-blue-600" />, 
+                  title: "Hospitality", 
+                  items: [
+                    "Engineer Unforgettable Guest Experiences", 
+                    "Optimize Staff Deployment", 
+                    "Streamline Operations for Maximum Profitability"
+                  ] 
+                },
+                { 
+                  icon: <Heart className="h-12 w-12 text-red-600" />, 
+                  title: "Healthcare", 
+                  items: [
+                    "Revolutionize Patient Care Delivery", 
+                    "Implement Optimized Workflows", 
+                    "Ensure Robust Data Security and Compliance"
+                  ] 
+                }
+              ].map((industry, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="h-full"
+                >
+                  <Card className="h-full flex flex-col">
+                    <CardContent className="p-6 flex flex-col h-full">
+                      <div className="flex items-center mb-4">
+                        {industry.icon}
+                        <h3 className="text-xl font-semibold ml-4">{industry.title}</h3>
+                      </div>
+                      <ul className="list-none space-y-2 flex-grow">
+                        {industry.items.map((item, itemIndex) => (
+                          <li key={itemIndex} className="flex items-start">
+                            <span className="mr-2 mt-1.5 h-1.5 w-1.5 bg-blue-600 rounded-full flex-shrink-0"></span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </CardContent>
+                  </Card>
+                </motion.div>
               ))}
             </div>
           </div>
         </section>
 
+        {/* Case Studies Section */}
         <section id="case-studies" className="py-16 bg-white">
           <div className="container mx-auto px-4">
-            <SectionHeader>AI SUCCESS STORIES</SectionHeader>
+            <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-800 to-blue-500">AI TRANSFORMATION</span>{' '}
+              <span className="text-red-600">SUCCESSES</span>
+            </h2>
             <div className="grid md:grid-cols-2 gap-8">
-              {caseStudies.map((study, index) => (
-                <Card key={index} className="overflow-hidden">
-                  <CardContent className="p-6">
-                    <div className="flex items-center mb-4">
-                      {study.icon}
-                      <div className="ml-4">
-                        <h3 className="text-2xl font-bold">{study.company}</h3>
-                        <p className="text-blue-600 font-semibold">{study.industry}</p>
+              {[
+                {
+                  company: "Global Manufacturing Corp",
+                  industry: "Manufacturing",
+                  icon: <Briefcase className="h-12 w-12 text-blue-600 mb-4" />,
+                  challenge: "Struggling with inefficiencies, rising costs, and manual processing",
+                  solution: "DTG implemented AI-powered Predictive Maintenance and Smart Inventory Management",
+                  result: "Revolutionized production with real-time optimization and reduced downtime",
+                  metrics: [
+                    { icon: <TrendingUp className="h-5 w-5 text-green-500" />, label: "Efficiency Boost", value: "135%" },
+                    { icon: <TrendingUp className="h-5 w-5 text-red-500 rotate-180" />, label: "Reduce Cost", value: "$5M" },
+                  ],
+                  details: [
+                    { icon: <Cpu className="h-5 w-5 text-blue-500" />, text: "AI-driven predictive maintenance reduced equipment downtime by 78%" },
+                    { icon: <BarChart className="h-5 w-5 text-green-500" />, text: "Smart inventory management cut carrying costs by 42%" }
+                  ]
+                },
+                {
+                  company: "TechEd Innovations",
+                  industry: "Education",
+                  icon: <GraduationCap className="h-12 w-12 text-blue-600 mb-4" />,
+                  challenge: "Outdated systems creating a gap between potential and performance",
+                  solution: "DTG developed an AI-Powered Adaptive Learning Platform and Student Engagement Analyzer",
+                  result: "Personalized learning experiences and data-driven student support",
+                  metrics: [
+                    { icon: <Flame className="h-5 w-5 text-yellow-500" />, label: "Student Engagement Surge", value: "+140%" },
+                    { icon: <Target className="h-5 w-5 text-red-500" />, label: "Performance Improvement", value: "85%" },
+                  ],
+                  details: [
+                    { icon: <Brain className="h-5 w-5 text-blue-500" />, text: "AI-driven content recommendations increased course completion rates by 62%" },
+                    { icon: <Target className="h-5 w-5 text-green-500" />, text: "Predictive analytics helped identify at-risk students, reducing dropout rates by 35%" }
+                  ]
+                }
+              ].map((study, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                >
+                  <Card className="overflow-hidden h-full">
+                    <CardContent className="p-6">
+                      <div className="flex items-center mb-4">
+                        {study.icon}
+                        <div className="ml-4">
+                          <h3 className="text-2xl font-bold">{study.company}</h3>
+                          <p className="text-blue-600 font-semibold">{study.industry}</p>
+                        </div>
                       </div>
-                    </div>
-                    <div className="space-y-4">
-                      <div>
-                        <h4 className="font-semibold text-lg mb-2">Challenge:</h4>
-                        <p className="text-gray-600">{study.challenge}</p>
+                      <div className="space-y-4">
+                        <div>
+                          <h4 className="font-semibold text-lg mb-2">Challenge:</h4>
+                          <p className="text-gray-600">{study.challenge}</p>
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-lg mb-2">DTG&apos;s AI Solution:</h4>
+                          <p className="text-gray-600">{study.solution}</p>
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-lg mb-2">Transformation Achieved:</h4>
+                          <p className="text-green-600 font-semibold">{study.result}</p>
+                        </div>
                       </div>
-                      <div>
-                        <h4 className="font-semibold text-lg mb-2">DTG&apos;s Solution:</h4>
-                        <p className="text-gray-600">{study.solution}</p>
+                      <div className="mt-6 pt-6 border-t border-gray-200">
+                        <h4 className="font-semibold text-lg mb-4">Transformation Metrics:</h4>
+                        <div className="flex justify-around mb-4">
+                          {study.metrics.map((metric, idx) => (
+                            <div key={idx} className="text-center">
+                              <div className="flex justify-center mb-2">{metric.icon}</div>
+                              <p className="text-sm text-gray-600">{metric.label}</p>
+                              <p className="text-lg font-bold text-blue-600">{metric.value}</p>
+                            </div>
+                          ))}
+                        </div>
+                        <div className="space-y-2">
+                          {study.details.map((detail, idx) => (
+                            <div key={idx} className="flex items-center">
+                              <div className="mr-2">{detail.icon}</div>
+                              <p className="text-sm text-gray-600">{detail.text}</p>
+                            </div>
+                          ))}
+                        </div>
                       </div>
-                      <div>
-                        <h4 className="font-semibold text-lg mb-2">Results:</h4>
-                        <p className="text-green-600 font-semibold">{study.result}</p>
-                      </div>
-                    </div>
-                    <div className="mt-6 pt-6 border-t border-gray-200">
-                      <h4 className="font-semibold text-lg mb-4">Key Metrics:</h4>
-                      <div className="flex justify-around">
-                        {study.metrics.map((metric, idx) => (
-                          <div key={idx} className="text-center">
-                            <div className="flex justify-center mb-2">{metric.icon}</div>
-                            <p className="text-sm text-gray-600">{metric.label}</p>
-                            <p className="text-lg font-bold text-blue-600">{metric.value}</p>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                    </CardContent>
+                  </Card>
+                </motion.div>
               ))}
             </div>
           </div>
         </section>
 
-        <section id="contact" className="py-16 bg-gradient-to-r from-blue-600 to-blue-800 text-white">
+        {/* Dominate with AI Section */}
+        <section className="bg-blue-900 text-white py-16">
           <div className="container mx-auto px-4 text-center">
-            <h2 className="text-4xl font-bold mb-6">READY TO DOMINATE YOUR INDUSTRY WITH AI?</h2>
-            <p className="text-xl mb-8 max-w-3xl mx-auto">
-              Don&apos;t just keep up with change – lead it. Partner with DTG&apos;s AI experts to unlock unprecedented levels of efficiency, innovation, and growth. Our battle-tested solutions are ready to elevate your business to industry-leading status.
-            </p>
-            <Button
-              size="lg"
-              className="bg-white text-blue-600 hover:bg-gray-100 text-sm sm:text-base md:text-lg lg:text-xl px-4 py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 w-full sm:w-auto"
+            <motion.h2 
+              className="text-3xl md:text-4xl font-bold mb-6"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              LEVEL UP: CONQUER YOUR WORK WITH AI
+            </motion.h2>
+            <motion.p 
+              className="text-xl mb-4 max-w-2xl mx-auto"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              It&apos;s time to push past your limits. AI isn&apos;t just a tool, it&apos;s your secret weapon 
+              to dominate your tasks, crush inefficiencies, and become the smartest performer in your field. 
+            </motion.p>
+            <motion.p
+              className="text-xl mb-8 max-w-2xl mx-auto font-semibold"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
+              Don&apos;t accept mediocrity – revolutionize your performance and leave everyone else behind.
+            </motion.p>
+            <motion.button 
+              className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-full text-lg transition duration-300 ease-in-out transform hover:scale-105"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
               onClick={() => setShowContactForm(true)}
             >
-              <span className="whitespace-nowrap">START YOUR AI REVOLUTION</span>
-            </Button>
+              Schedule Your Complimentary AI Consultation
+            </motion.button>
           </div>
         </section>
 
-        <section id="advantage" className="py-16 bg-gray-50">
+        {/* DTG AI Advantage Section */}
+        <section id="advantage" className="py-16 bg-white">
           <div className="container mx-auto px-4">
-            <SectionHeader>THE DTG AI ADVANTAGE</SectionHeader>
-            <p className="text-xl text-center mb-12 text-gray-600">
-              Partner with DTG to leverage AI for unparalleled growth and industry dominance.
-            </p>
+            <motion.h2 
+              className="text-3xl md:text-4xl font-bold mb-6 text-center text-blue-600"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              THE DTG <span className="text-red-600">AI</span> ADVANTAGE
+            </motion.h2>
+            <motion.p 
+              className="text-xl text-center mb-12 text-gray-600"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              Partner with DTG to leverage AI for enhanced efficiency, cost savings, and unprecedented performance in your work.
+            </motion.p>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {advantages.map((advantage, index) => (
-                <div key={index} className="flex items-center bg-blue-50 rounded-lg shadow p-4">
-                  <CheckCircle className="h-6 w-6 text-blue-500 mr-2" />
-                  <span className="text-lg font-semibold">{advantage}</span>
-                </div>
+              {[
+                "AI Solutions That Defy Limits",
+                "Seamless Integration for Maximum Impact",
+                "24/7 Support and Reliability",
+                "Results That Give You the Edge"
+              ].map((advantage, index) => (
+                <motion.div 
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
+                  className="bg-blue-50 rounded-lg shadow-sm p-6 flex items-start space-x-3"
+                >
+                  <CheckCircle className="h-6 w-6 text-blue-500 flex-shrink-0" />
+                  <span className="text-lg font-medium">{advantage}</span>
+                </motion.div>
               ))}
             </div>
-            <div className="mt-12 bg-blue-50 rounded-lg shadow-lg p-6 text-center">
-              <p className="text-xl italic mb-4">
+            <motion.div 
+              className="mt-12 bg-blue-50 rounded-lg shadow-sm p-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+            >
+              <p className="text-xl italic mb-4 text-center">
                 &quot;DTG&apos;s AI solutions have completely transformed our operations. We&apos;ve experienced unprecedented improvements in efficiency and are now leading our industry in innovation. Their strategic, no-nonsense approach has been invaluable to our success.&quot;
               </p>
-              <p className="font-semibold">- CEO, Fortune 500 Company</p>
-            </div>
+              <p className="font-semibold text-center">- CEO, Fortune 500 Company</p>
+            </motion.div>
           </div>
         </section>
 
-        <section id="ai-revolution" className="py-16 bg-gray-50">
+        {/* AI Revolution Solutions Section */}
+        <section id="ai-solutions" className="py-16 bg-sky-50">
           <div className="container mx-auto px-4">
-            <SectionHeader>LEAD THE AI REVOLUTION IN YOUR INDUSTRY</SectionHeader>
-            <div className="max-w-4xl mx-auto text-center mb-4">
-              <AnimatedText
-                messages={[
-                  "Embrace the Future of AI",
-                  "Transform Your Business Landscape",
-                  "Unlock Unprecedented Efficiency",
-                  "Harness Data-Driven Insights",
-                  "Stay Ahead of the Competition"
-                ]}
-                className="text-2xl md:text-3xl font-bold text-gray-700"
-              />
+            <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center text-blue-600">
+              LEAD THE <span className="text-red-600">AI</span> REVOLUTION WITH POWERFUL SOLUTIONS
+            </h2>
+            <div className="max-w-4xl mx-auto text-center mb-8">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="text-2xl md:text-3xl font-bold text-gray-700 mb-4"
+              >
+                Embrace the Future of AI
+              </motion.div>
+              <p className="text-xl text-gray-600">
+                Our AI solutions are engineered to deliver immediate, measurable results with uncompromising integration for maximum impact.
+              </p>
             </div>
-            <div className="grid md:grid-cols-3 gap-8 mt-12">
-              {features.map((feature, index) => (
-                <FeatureCard key={index} icon={feature.icon} title={feature.title} description={feature.description} />
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+              {[
+                {
+                  icon: Brain,
+                  title: "Advanced AI Algorithms",
+                  description: "Leverage cutting-edge machine learning models tailored to your industry's unique challenges for intelligent process automation."
+                },
+                {
+                  icon: Zap,
+                  title: "Real-time Processing & Analytics",
+                  description: "Make split-second decisions with AI-powered real-time data analysis and predictive insights to forecast trends and identify opportunities."
+                },
+                {
+                  icon: BarChart,
+                  title: "AI-Powered Customer Insights",
+                  description: "Understand and predict customer behavior to deliver personalized experiences, drive loyalty, and stay ahead of the competition."
+                },
+                {
+                  icon: Database,
+                  title: "Smart Data Integration",
+                  description: "Seamlessly integrate and analyze vast amounts of data from multiple sources with AI-enhanced data management solutions."
+                },
+                {
+                  icon: Rocket,
+                  title: "Scalable AI-Driven Innovation",
+                  description: "Accelerate product development and grow your AI capabilities alongside your business with our scalable infrastructure."
+                },
+                {
+                  icon: Shield,
+                  title: "Robust AI Security",
+                  description: "Protect your data and AI models with state-of-the-art security measures, including AI-enhanced threat detection and response mechanisms."
+                }
+              ].map((solution, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="bg-white p-6 rounded-lg shadow-md"
+                >
+                  <solution.icon className="h-12 w-12 text-blue-500 mb-4" />
+                  <h3 className="text-xl font-semibold mb-2">{solution.title}</h3>
+                  <p className="text-gray-600">{solution.description}</p>
+                </motion.div>
               ))}
             </div>
-          </div>
-        </section>
-
-        <section id="solutions" className="py-16 bg-sky-50">
-          <div className="container mx-auto px-4">
-            <SectionHeader>DOMINATE WITH AI-POWERED SOLUTIONS</SectionHeader>
-            <div className="text-xl text-center mb-12 text-gray-600 space-y-2">
-              <p className="text-2xl font-semibold">Uncompromising AI Integration for Maximum Impact</p>
-              <p>Our solutions are engineered to deliver immediate, measurable results.</p>
-            </div>
-            <div className="grid md:grid-cols-2 gap-8">
-              {solutions.map((solution, index) => (
-                <FeatureCard key={index} icon={solution.icon} title={solution.title} description={solution.description} />
-              ))}
-            </div>
-            <div className="text-center mt-12">
+            <div className="text-center">
               <Button
                 size="lg"
                 className="bg-blue-600 hover:bg-blue-700 text-white text-sm sm:text-base md:text-lg lg:text-xl px-4 py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 w-full sm:w-auto"
@@ -600,6 +593,7 @@ export default function Home() {
         </section>
       </main>
 
+      {/* Footer */}
       <footer className="bg-blue-900 text-white">
         <div className="container mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="space-y-4">
@@ -607,15 +601,31 @@ export default function Home() {
             <p className="text-sm text-gray-300">
               Distributed Technology Group (DTG) - A service-disabled veteran-owned company committed to transforming businesses with no-nonsense, results-driven AI solutions.
             </p>
+            <div className="flex justify-start items-center mt-4">
+              <div className="rounded-full bg-white p-4 w-24 h-24 flex items-center justify-center">
+                <div className="relative w-full h-full">
+                  <Image
+                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-hIUx4CNRHozMR1cztun5KaiEYSibkW.png"
+                    alt="U.S. Veteran Owned Business"
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 96px) 100vw, 96px"
+                    priority
+                  />
+                </div>
+              </div>
+            </div>
           </div>
           <div className="space-y-4">
             <h3 className="text-xl font-semibold">Quick Links</h3>
             <nav>
               <ul className="space-y-2">
-                <li><button onClick={() => scrollToSection('solutions')} className="text-gray-300 hover:text-blue-300 transition-colors duration-200">AI Solutions</button></li>
+                <li><button onClick={() => scrollToSection('hero')} className="text-gray-300 hover:text-blue-300 transition-colors duration-200">Home</button></li>
+                <li><button onClick={() => scrollToSection('approach')} className="text-gray-300 hover:text-blue-300 transition-colors duration-200">Our Approach</button></li>
                 <li><button onClick={() => scrollToSection('industries')} className="text-gray-300 hover:text-blue-300 transition-colors duration-200">Industries We Serve</button></li>
                 <li><button onClick={() => scrollToSection('case-studies')} className="text-gray-300 hover:text-blue-300 transition-colors duration-200">Case Studies</button></li>
-                <li><button onClick={() => scrollToSection('contact')} className="text-gray-300 hover:text-blue-300 transition-colors duration-200">Contact Us</button></li>
+                <li><button onClick={() => scrollToSection('advantage')} className="text-gray-300 hover:text-blue-300 transition-colors duration-200">Our Advantage</button></li>
+                <li><button onClick={() => setShowContactForm(true)} className="text-gray-300 hover:text-blue-300 transition-colors duration-200">Contact Us</button></li>
               </ul>
             </nav>
           </div>
@@ -625,22 +635,65 @@ export default function Home() {
               Ready to revolutionize your business with AI? Get in touch with our experts today.
             </p>
             <a 
-              href="https://www.dtg.com" 
+              href="https://www.Dtg.com" 
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-blue-300 hover:text-blue-100 transition-colors duration-200 flex items-center gap-2"
             >
               Visit our website
               <ExternalLink className="h-4 w-4" />
             </a>
+            <div className="space-y-2 text-sm text-gray-300">
+              <div className="flex items-start gap-2">
+                <MapPin className="h-5 w-5 flex-shrink-0 mt-0.5" />
+                <span>499 South Warren Street, Suite 501, Syracuse, NY 13202</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Phone className="h-5 w-5" />
+                <a href="tel:1-585-347-2101" className="hover:text-blue-300 transition-colors duration-200">1-585-347-2101</a>
+              </div>
+              <div className="flex items-center gap-2">
+                <Mail className="h-5 w-5" />
+                <a href="mailto:customerservice@dtg.com" className="hover:text-blue-300 transition-colors duration-200">customerservice@dtg.com</a>
+              </div>
+            </div>
           </div>
         </div>
         <div className="border-t border-blue-800 mt-8 pt-8 text-center">
           <p className="text-sm text-gray-400">
-            © 2024 DTG. All rights reserved. Pushing the boundaries of AI excellence.
+            © {new Date().getFullYear()} DTG. All rights reserved. Pushing the boundaries of AI excellence.
           </p>
         </div>
       </footer>
 
-      {showContactForm && <ContactForm onClose={() => setShowContactForm(false)} />}
+      {/* Contact Form Modal */}
+      {showContactForm && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-lg p-8 max-w-md w-full">
+            <h2 className="text-2xl font-bold mb-4">Contact Us</h2>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
+                <Input type="text" id="name" name="name" required className="mt-1 block w-full" />
+              </div>
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+                <Input type="email" id="email" name="email" required className="mt-1 block w-full" />
+              </div>
+              <div>
+                <label htmlFor="message" className="block text-sm font-medium text-gray-700">Message</label>
+                <Textarea id="message" name="message" required className="mt-1 block w-full" />
+              </div>
+              <div className="flex justify-end space-x-4">
+                <Button type="button" variant="outline" onClick={() => setShowContactForm(false)}>
+                  Cancel
+                </Button>
+                <Button type="submit">Send</Button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
