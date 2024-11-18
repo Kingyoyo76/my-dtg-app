@@ -14,8 +14,13 @@ interface ContactFormProps {
 }
 
 export default function ContactForm({ isVisible, onClose }: ContactFormProps) {
-  const [emailError, setEmailError] = useState('')
   const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    role: ''
+  })
+  const [errors, setErrors] = useState({
     firstName: '',
     lastName: '',
     email: '',
@@ -28,24 +33,48 @@ export default function ContactForm({ isVisible, onClose }: ContactFormProps) {
       ...prevState,
       [name]: value
     }))
+    setErrors(prevState => ({
+      ...prevState,
+      [name]: ''
+    }))
+  }
 
-    if (name === 'email') {
-      setEmailError('')
-    }
+  const validateEmail = (email: string) => {
+    const regex = /^[a-zA-Z0-9._%+-]+@(?!gmail\.com)(?!yahoo\.com)(?!hotmail\.com)(?!me\.com)(?!outlook\.com)(?!aol\.com)(?!icloud\.com)[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+    return regex.test(email)
   }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     
-    // Basic email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRegex.test(formData.email)) {
-      setEmailError('Please enter a valid email address')
-      return
+    let newErrors = {
+      firstName: '',
+      lastName: '',
+      email: '',
+      role: ''
     }
 
-    console.log('Form submitted:', formData)
-    onClose()
+    if (!formData.firstName.trim()) {
+      newErrors.firstName = 'First name is required'
+    }
+    if (!formData.lastName.trim()) {
+      newErrors.lastName = 'Last name is required'
+    }
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required'
+    } else if (!validateEmail(formData.email)) {
+      newErrors.email = 'Please enter a valid professional email address'
+    }
+    if (!formData.role.trim()) {
+      newErrors.role = 'Role is required'
+    }
+
+    setErrors(newErrors)
+
+    if (Object.values(newErrors).every(error => error === '')) {
+      console.log('Form submitted:', formData)
+      onClose()
+    }
   }
 
   return (
@@ -73,9 +102,16 @@ export default function ContactForm({ isVisible, onClose }: ContactFormProps) {
                   name="firstName" 
                   value={formData.firstName}
                   onChange={handleChange}
-                  required 
                   className="mt-1 block w-full" 
                 />
+                {errors.firstName && (
+                  <Alert variant="destructive" className="mt-2">
+                    <AlertCircle className="h-4 w-4" />
+                    <AlertDescription>
+                      {errors.firstName}
+                    </AlertDescription>
+                  </Alert>
+                )}
               </div>
               <div>
                 <Label htmlFor="lastName">Last Name</Label>
@@ -85,9 +121,16 @@ export default function ContactForm({ isVisible, onClose }: ContactFormProps) {
                   name="lastName" 
                   value={formData.lastName}
                   onChange={handleChange}
-                  required 
                   className="mt-1 block w-full" 
                 />
+                {errors.lastName && (
+                  <Alert variant="destructive" className="mt-2">
+                    <AlertCircle className="h-4 w-4" />
+                    <AlertDescription>
+                      {errors.lastName}
+                    </AlertDescription>
+                  </Alert>
+                )}
               </div>
               <div>
                 <Label htmlFor="email">Email</Label>
@@ -97,14 +140,13 @@ export default function ContactForm({ isVisible, onClose }: ContactFormProps) {
                   name="email" 
                   value={formData.email}
                   onChange={handleChange}
-                  required 
                   className="mt-1 block w-full" 
                 />
-                {emailError && (
+                {errors.email && (
                   <Alert variant="destructive" className="mt-2">
                     <AlertCircle className="h-4 w-4" />
                     <AlertDescription>
-                      {emailError}
+                      {errors.email}
                     </AlertDescription>
                   </Alert>
                 )}
@@ -120,6 +162,14 @@ export default function ContactForm({ isVisible, onClose }: ContactFormProps) {
                   placeholder="e.g. Manager, Developer, etc."
                   className="mt-1 block w-full" 
                 />
+                {errors.role && (
+                  <Alert variant="destructive" className="mt-2">
+                    <AlertCircle className="h-4 w-4" />
+                    <AlertDescription>
+                      {errors.role}
+                    </AlertDescription>
+                  </Alert>
+                )}
               </div>
               <div className="flex justify-end space-x-2 pt-4">
                 <Button type="button" variant="outline" onClick={onClose}>

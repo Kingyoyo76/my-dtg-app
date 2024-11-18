@@ -54,7 +54,7 @@ export default function Home() {
 
     const popupTimer = setTimeout(() => {
       setShowRoadmapPopup(true)
-    }, 7000) // 7 seconds
+    }, 45000) // 45 seconds
 
     return () => {
       window.removeEventListener('scroll', handleScroll)
