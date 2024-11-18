@@ -192,29 +192,29 @@ export default function Home() {
                   transition={{ duration: 0.6 }}
                   className="flex flex-col h-full justify-between"
                 >
-                  <div className="md:-mt-2">
-                    <h1 className="text-3xl md:text-4xl font-bold mb-5 leading-tight text-gray-800">
-                      <span className="block mb-2 text-purple-600">BOOST EFFICIENCY!</span>
-                      <span className="block mb-2">ACHIEVE MORE &amp; SAVE TIME!</span>
-                      <span className="block mb-2 text-purple-600">SPEND LESS!</span>
-                      <span className="block">WITH ENTERPRISE-LEVEL AI</span>
-                      <span className="block">POWERED BY DTG AI EXPERTISE</span>
-                    </h1>
-                  </div>
-                  <div className="flex-grow flex flex-col justify-between">
-                    <ul className="space-y-3 mb-6 md:mt-6">
-                      {[
-                        { icon: <Sparkles className="h-6 w-6 text-purple-600 inline mr-2" />, text: "Revolutionize Operations with Proven AI" },
-                        { icon: <Brain className="h-6 w-6 text-purple-600 inline mr-2" />, text: "Build AI Agents That Work for You" },
-                        { icon: <Cpu className="h-6 w-6 text-purple-600 inline mr-2" />, text: "Optimize for Peak Performance" },
-                        { icon: <Code className="h-6 w-6 text-purple-600 inline mr-2" />, text: "No-Code Solutions, Maximum Impact" },
-                        { icon: <Rocket className="h-6 w-6 text-purple-600 inline mr-2" />, text: "Expert AI Strategies, Real Results" }
-                      ].map((item, index) => (
-                        <li key={index} className="flex items-start">
-                          {item.icon}
-                          <span className="text-lg md:text-xl font-semibold text-gray-700">{item.text}</span>
-                        </li>
-                      ))}
+                  <div className="md:-mt-2 space-y-6">
+                <h1 className="text-4xl md:text-5xl font-bold leading-tight text-gray-800">
+                  <span className="block">Conquer Your Work With</span>
+                  <span className="block text-purple-600">Enterprise-Level AI Solutions</span>
+                  <span className="block">Built For You by DTG AI Experts</span>
+                </h1>
+                <p className="text-2xl text-gray-700 font-semibold">
+                  Boost Efficiency, Save Time, and Money with Generative AI
+                </p>
+              </div>
+              <div className="flex-grow flex flex-col justify-between">
+                <ul className="space-y-4 my-8">
+                  {[
+                    { icon: <Sparkles className="h-6 w-6 text-purple-600" />, text: "Revolutionize Operations with Proven AI" },
+                    { icon: <Brain className="h-6 w-6 text-purple-600" />, text: "Build AI Agents That Work for You" },
+                    { icon: <Cpu className="h-6 w-6 text-purple-600" />, text: "Optimize for Peak Performance" },
+                    { icon: <Code className="h-6 w-6 text-purple-600" />, text: "No-Code Solutions, Maximum Impact" }
+                  ].map((item, index) => (
+                    <li key={index} className="flex items-center space-x-3">
+                      <div className="flex-shrink-0">{item.icon}</div>
+                      <span className="text-lg font-medium text-gray-700">{item.text}</span>
+                    </li>
+                  ))}
                     </ul>
                     <div className="mt-4 md:mt-8 flex flex-col sm:flex-row justify-start items-center gap-4">
                       <Button
